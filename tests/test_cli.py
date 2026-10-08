@@ -63,6 +63,26 @@ def test_cli_output_dir_multiple_inputs(tmp_path):
     assert (outdir / "b_corrected.tif").exists()
 
 
+def test_cli_compare_preprocess_writes_figure(tmp_path):
+    src = tmp_path / "gel.tif"
+    fig = tmp_path / "pre.png"
+    _write(src, tilt=5.0)
+    rc = main([str(src), "--dry-run", "--compare-preprocess", str(fig), "--quiet"])
+    assert rc == 0
+    assert fig.exists()
+    assert fig.stat().st_size > 0
+
+
+def test_cli_compare_writes_figure(tmp_path):
+    src = tmp_path / "gel.tif"
+    fig = tmp_path / "compare.png"
+    _write(src, tilt=5.0)
+    rc = main([str(src), "--dry-run", "--compare", str(fig), "--quiet"])
+    assert rc == 0
+    assert fig.exists()
+    assert fig.stat().st_size > 0
+
+
 def test_cli_missing_input(tmp_path):
     rc = main([str(tmp_path / "nope.tif"), "--quiet"])
     assert rc == 2

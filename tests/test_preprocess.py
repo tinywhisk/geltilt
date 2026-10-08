@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 import numpy as np
+import pytest
 
 from geltilt.preprocess import (
     content_bbox,
     content_mask,
     detect_polarity,
     normalize_signal,
+    robust_limits,
     to_signal,
+    to_u8,
 )
 
 
@@ -48,3 +51,33 @@ def test_content_bbox_around_bands():
 def test_content_mask_empty_returns_none_bbox():
     mask = content_mask(np.zeros((16, 16), np.float32))
     assert content_bbox(mask) is None
+
+def test_robust_limits_percentiles():
+    arr = np.arange(1000, dtype=np.float32).reshape(10, 100)
+    lo, hi = robust_limits(arr, 0.5, 99.5)
+    assert lo < hi
+    assert lo == pytest.approx(5.0, abs=1.0)
+    assert hi == pytest.approx(994.0, abs=1.0)
+
+
+def test_robust_limits_flat_image_has_span():
+    lo, hi = robust_limits(np.full((8, 8), 7, np.uint8))
+    assert hi == lo + 1.0
+
+
+def test_to_u8_maps_range_and_rounds():
+    arr = np.array([[0.0, 0.5, 1.0]], np.float32)
+    out = to_u8(arr, 0.0, 1.0)
+    assert out.dtype == np.uint8
+    assert out.tolist() == [[0, 128, 255]]
+
+
+def test_to_u8_clips_out_of_range():
+    arr = np.array([[-10.0, 200.0]], np.float32)
+    out = to_u8(arr, 0.0, 100.0)
+    assert out.tolist() == [[0, 255]]
+
+
+def test_to_u8_gamma_brightens():
+    arr = np.array([[0.25]], np.float32)
+    assert to_u8(arr, 0.0, 1.0, gamma=0.5)[0, 0] > to_u8(arr, 0.0, 1.0)[0, 0]

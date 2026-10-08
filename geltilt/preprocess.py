@@ -12,6 +12,29 @@ def estimate_background(gray: np.ndarray) -> float:
     return float(np.median(gray))
 
 
+def robust_limits(arr: np.ndarray, plo: float = 0.5, phi: float = 99.5) -> Tuple[float, float]:
+    """Robust (low, high) intensity limits from percentiles of an array."""
+    f = arr.astype(np.float32)
+    lo, hi = np.percentile(f, (plo, phi))
+    lo, hi = float(lo), float(hi)
+    if hi <= lo:
+        hi = lo + 1.0
+    return lo, hi
+
+
+def to_u8(arr: np.ndarray, lo: float, hi: float, gamma: float = 1.0) -> np.ndarray:
+    """Map an array to uint8 using robust limits with clipping and optional gamma."""
+    f = arr.astype(np.float32)
+    span = float(hi) - float(lo)
+    if span <= 0:
+        span = 1.0
+    f = (f - float(lo)) / span
+    np.clip(f, 0.0, 1.0, out=f)
+    if gamma != 1.0:
+        np.power(f, float(gamma), out=f)
+    return (f * 255.0 + 0.5).astype(np.uint8)
+
+
 def detect_polarity(gray: np.ndarray, background: Optional[float] = None) -> str:
     """Return 'bright' for bright bands on a dark background, else 'dark'.
 

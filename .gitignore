@@ -14,3 +14,6 @@ venv/
 # Editor
 .idea/
 .vscode/
+# Generated comparison figures (regenerate via --compare / --compare-preprocess)
+comparison.png
+preprocess_comparison.png

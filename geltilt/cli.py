@@ -38,6 +38,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--crop", action="store_true", help="crop output to band content")
     p.add_argument("--dry-run", action="store_true", help="only estimate, do not write images")
     p.add_argument("--report", help="write a JSON report of the estimate to this path")
+    p.add_argument("--compare", help="write a side-by-side before/after PNG with vertical guides")
+    p.add_argument("--compare-preprocess", help="write a raw-vs-preprocessed comparison PNG")
+    p.add_argument("--gamma", type=float, default=1.0,
+                   help="display gamma for comparison figures")
     p.add_argument("--quiet", action="store_true", help="suppress per-file output")
     return p
 
@@ -72,6 +76,23 @@ def _process_one(src: Path, args: argparse.Namespace) -> dict:
         out.parent.mkdir(parents=True, exist_ok=True)
         save_array(out, corrected)
         record["output"] = str(out)
+    if args.compare:
+        from .viz import render_comparison, save_comparison
+
+        figure = render_comparison(
+            original, corrected, estimate.angle,
+            info=estimate.to_dict(), source_name=src.name, gamma=args.gamma,
+        )
+        save_comparison(args.compare, figure)
+        record["compare"] = str(args.compare)
+    if args.compare_preprocess:
+        from .viz import render_preprocessing_comparison, save_comparison
+
+        figure = render_preprocessing_comparison(
+            original, gamma=args.gamma, source_name=src.name,
+        )
+        save_comparison(args.compare_preprocess, figure)
+        record["compare_preprocess"] = str(args.compare_preprocess)
     if not args.quiet:
         detail = f"{src.name}: angle {estimate.angle:+.3f} deg " \
                  f"(method={estimate.method}, polarity={estimate.polarity})"
@@ -91,7 +112,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     if args.output and len(inputs) != 1:
         print("error: --output is only valid with a single input", file=sys.stderr)
         return 2
-
+    if args.compare and len(inputs) != 1:
+        print("error: --compare is only valid with a single input", file=sys.stderr)
+        return 2
+    if args.compare_preprocess and len(inputs) != 1:
+        print("error: --compare-preprocess is only valid with a single input", file=sys.stderr)
+        return 2
 
     records: List[dict] = [_process_one(src, args) for src in inputs]
 
