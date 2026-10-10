@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 warnings.filterwarnings('ignore')
 from scipy import ndimage as ndi
 from skimage import measure, morphology, segmentation
-from slab_edges import levels, slab_mask
+from slab_edges_v3 import levels, slab_mask
 
 def slab_outline(a, sigma=2, reach=55, min_ratio=1.4):
     a=a.astype(np.float32); H,W=a.shape

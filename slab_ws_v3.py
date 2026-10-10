@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 warnings.filterwarnings('ignore')
 from scipy import ndimage as ndi
 from skimage import measure, morphology, segmentation
-from slab_edges import levels, slab_mask
+from slab_edges_v3 import levels, slab_mask
 
 
 def halo_depth(c, gen, default, max_depth=320, min_ratio=1.8, margin=8, step=3):
