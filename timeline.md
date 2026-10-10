@@ -76,5 +76,58 @@ Gel electrophoresis image editor (Python). Two planned features:
 
 ---
 
+## 2026-10-10 (continued session)
+
+### 10. Slab-edge failure mode identified
+- The vertical-projection estimator can lock onto the **gel slab edge** — the long, low-contrast,
+  column-constant black→gray boundary of the illuminated region — instead of the bands
+  (edge ≈ 0° vs bands ≈ +3° on sample #1; the estimator returned ≈ 0°). Per-column background
+  subtraction was only marginal (flagged 26 → 23) and not sufficient.
+
+### 11. Slab masking (marker watershed on log-intensity gradient)
+- `slab_ws.py` / `slab_edges.py` → **v2** (EDT inside-seed; verified a pure speedup, bit-identical masks)
+  → **v3** (`slab_ws_v3.py` adds `halo_depth` + `open_sides`, which sharply cuts `%weak`).
+- Mask quality scored by `%weak` (no sharp step) and `%frame` (outline follows the image frame).
+- **Adopted the v3 outline, shrunk 10 px, as the slab mask** and wired it into the `smears` engine
+  (`--slab-mask-dir`, `--no-slab-mask`). Validation with the mask on: median 0.53°, >1° = 27, max 4.83°
+  — it removed the catastrophic outliers but shifted 10 borderline cases. Slab-mask files are retained
+  for a later step (not deleted).
+
+### 12. Band-only masking via GelGenie (validated dead-end for the default path)
+- Integrated the GelGenie ONNX band segmenter via `cv2.dnn` (`geltilt/bandmask.py`) to down-weight bands.
+- Band coverage is only ~1–2 % of pixels, so pixel/neighbourhood/local-max reweighting were neutral or
+  worse; the mask only helped where the slab edge dominated. Reweighting approaches abandoned.
+
+### 13. `smears` SPEC engine
+- Implemented `SPEC-AUTOROTATE.md` as `geltilt/smears.py` (`gel_mask` → eroded `interior` →
+  per-angle `flatten` + `ridge` → `contrast`/`persistence` cues). Acceptance tests T1–T5 pass and it
+  reproduced the SPEC's recorded values exactly (`G1-NE` −1.39°, `SLERF2GDNA` +5.19°, `胡椒rna2` +1.76°).
+
+### 14. Cue arbitration + reweighting experiments
+- §7.2 arbitration changed to **prefer `contrast` unless its peak is at the range edge (`edge_cv`)`,
+  falling back to `persistence` — this fixed the persistence-spurious cases.
+- `asinh(resp/k)` compression lowered max error 8.42° → 3.25° but *shifted peaks* (not a real fix);
+  band-mask and local-max reweighting did not help. All reweighting options were exhausted.
+
+### 15. Definitive lane-based estimator (`ladders`)
+- Adopted `improved-rotation-alg/` — `ladders.estimate(band centroids)` — as the **one and only**
+  rotation algorithm; retired `smears` + `projection` from the CLI (`geltilt/cli.py` rewritten).
+- Front end implemented per **`BAND_DETECTION.md`**: GelGenie ONNX **tiled at native scale**
+  (1024 window, overlap 256, tent-weight feather merge), softmax over the class axis, threshold 0.5 →
+  opening 3×3 → 8-connected → area ≥ 30 → centroids. **No slab mask** is used in this path.
+- End-to-end over 94 vs `ground_truth.json`: **92/94 coverage, mean 0.709°, median 0.646°, ≤1° 75 %,
+  ≤2° 100 %, max 1.93°** — an exact reproduction of the SPEC. The 2 refusals match the documented
+  structural refusals (`20260428 15810 990 酵母膜蛋白质粒`, `20260811 62.Tif`).
+- Regenerated `rot_output/` (94 comparisons + `summary.json`) and `discrepencies/` (25 figures +
+  `index.txt`); test suite **92/92**.
+
+### 16. Repository state
+- New modules this session: `bandmask.py`, `banddetect.py`, `ladders.py`, `smears.py`, plus the slab
+  watershed scripts. Everything since commit `c6854bc` is still **uncommitted**.
+
+---
+
 ## Next up
 - **Feature 2: lane-based cropping** — detect lane boundaries on the straightened gel and export per-lane crops.
+- Reuse the adopted slab mask (step 11) in the later slab/edge step.
+- Commit the ladders integration + BAND_DETECTION front end.

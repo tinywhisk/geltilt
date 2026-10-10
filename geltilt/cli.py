@@ -1,4 +1,9 @@
-"""Command-line interface for geltilt."""
+"""Command-line interface for geltilt.
+
+The one and only rotation algorithm: GelGenie band mask -> band centroids -> ``ladders.estimate``.
+The reported ``angle`` is passed as-is to ``cv2.getRotationMatrix2D`` (its convention), and a
+refusal (``ok=False``) leaves the image unrotated.
+"""
 
 from __future__ import annotations
 
@@ -8,40 +13,36 @@ import sys
 from pathlib import Path
 from typing import List, Optional, Sequence
 
-from .core import auto_correct
+import numpy as np
+
+from . import ladders
+from .banddetect import band_centroids, default_segmenter
+from .core import correct_rotation
 from .imageio import load_array, save_array
-from .projection import MAXIMIZE
 
 
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="geltilt",
-        description="Auto-correct gel electrophoresis image rotation so that lanes are vertical.",
+        description="Auto-correct gel electrophoresis image rotation so that lanes are vertical "
+                    "(lane-based estimator).",
     )
     p.add_argument("inputs", nargs="+", help="input image file(s)")
     p.add_argument("-o", "--output", help="output file (only with a single input)")
     p.add_argument("--output-dir", help="output directory (for one or more inputs)")
     p.add_argument("--suffix", default="_corrected", help="suffix for generated filenames")
-    p.add_argument("--max-angle", type=float, default=15.0, help="search range +/- degrees")
-    p.add_argument("--coarse-step", type=float, default=0.5, help="coarse sweep step (deg)")
-    p.add_argument("--fine-step", type=float, default=0.05, help="fine sweep step (deg)")
-    p.add_argument("--method", default="tv2", choices=sorted(MAXIMIZE),
-                   help="projection sharpness metric")
-    p.add_argument("--polarity", default="auto", choices=["auto", "bright", "dark"],
-                   help="band polarity (auto-detected by default)")
-    p.add_argument("--no-log", action="store_true", help="disable log compression of signal")
-    p.add_argument("--no-roi", action="store_true", help="analyse the whole frame")
-    p.add_argument("--downsample", type=int, default=1200,
-                   help="max working dimension during estimation (0 disables)")
+    p.add_argument("--gelgenie-model", help="GelGenie ONNX model path (default: cached/downloaded)")
+    p.add_argument("--threshold", type=float, default=0.5, help="band-probability cutoff")
+    p.add_argument("--min-area", type=int, default=30, help="min component area (px) for a band")
     p.add_argument("--expand", action="store_true",
                    help="grow the canvas so no content is cropped")
     p.add_argument("--crop", action="store_true", help="crop output to band content")
     p.add_argument("--dry-run", action="store_true", help="only estimate, do not write images")
     p.add_argument("--report", help="write a JSON report of the estimate to this path")
     p.add_argument("--compare", help="write a side-by-side before/after PNG with vertical guides")
-    p.add_argument("--compare-preprocess", help="write a raw-vs-preprocessed comparison PNG")
-    p.add_argument("--gamma", type=float, default=1.0,
-                   help="display gamma for comparison figures")
+    p.add_argument("--compare-dir",
+                   help="write a per-input before/after comparison PNG into this directory")
+    p.add_argument("--gamma", type=float, default=1.0, help="display gamma for comparison figures")
     p.add_argument("--quiet", action="store_true", help="suppress per-file output")
     return p
 
@@ -57,48 +58,56 @@ def _output_path(src: Path, args: argparse.Namespace) -> Path:
 
 def _process_one(src: Path, args: argparse.Namespace) -> dict:
     original = load_array(src)
-    corrected, estimate = auto_correct(
-        original,
-        expand=args.expand,
-        crop=args.crop,
-        max_angle=args.max_angle,
-        coarse_step=args.coarse_step,
-        fine_step=args.fine_step,
-        method=args.method,
-        polarity=args.polarity,
-        log=not args.no_log,
-        use_roi=not args.no_roi,
-        downsample_to=args.downsample or None,
-    )
-    record = {"input": str(src), **estimate.to_dict()}
+    seg = default_segmenter(args.gelgenie_model)
+    xy = band_centroids(original, segmenter=seg, threshold=args.threshold, min_area=args.min_area)
+    res = ladders.estimate(xy)
+
+    ok = bool(res.get("ok"))
+    angle = float(res.get("angle", 0.0))
+    apply_angle = angle if (ok and np.isfinite(angle)) else 0.0
+    corrected = correct_rotation(original, apply_angle, expand=args.expand,
+                                 crop_to_content_flag=args.crop)
+
+    se = res.get("se")
+    se_txt = f"{se:.2f}" if isinstance(se, (int, float)) and np.isfinite(se) else "-"
+    status = (f"engine ladders | ok={ok} | se={se_txt} | kept={res.get('kept', 0)}/"
+              f"{res.get('n_ladders', 0)} | {res.get('reason', '')}")
+    figure_of = {"method": "ladders", "polarity": "-", "status": status,
+                 "max_angle": "-", "coarse_step": "-", "fine_step": "-"}
+    record = {
+        "input": str(src), "engine": "ladders", "ok": ok,
+        "angle": round(apply_angle, 3),
+        "angle_reported": round(angle, 3) if np.isfinite(angle) else None,
+        "se": se, "reason": res.get("reason", ""), "warnings": res.get("warnings", []),
+        "kept": res.get("kept"), "n_ladders": res.get("n_ladders"),
+        "n_bands": res.get("n_bands"), "fallback": res.get("fallback"),
+        "overdispersion": res.get("overdispersion"),
+    }
+
     if not args.dry_run:
         out = _output_path(src, args)
         out.parent.mkdir(parents=True, exist_ok=True)
         save_array(out, corrected)
         record["output"] = str(out)
+
+    targets = []
     if args.compare:
+        targets.append(Path(args.compare))
+    if args.compare_dir:
+        dest = Path(args.compare_dir) / f"{src.stem}_compare.png"
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        targets.append(dest)
+    if targets:
         from .viz import render_comparison, save_comparison
 
-        figure = render_comparison(
-            original, corrected, estimate.angle,
-            info=estimate.to_dict(), source_name=src.name, gamma=args.gamma,
-        )
-        save_comparison(args.compare, figure)
-        record["compare"] = str(args.compare)
-    if args.compare_preprocess:
-        from .viz import render_preprocessing_comparison, save_comparison
+        for dest in targets:
+            figure = render_comparison(original, corrected, apply_angle,
+                                       info=figure_of, source_name=src.name, gamma=args.gamma)
+            save_comparison(dest, figure)
+            record["compare"] = str(dest)
 
-        figure = render_preprocessing_comparison(
-            original, gamma=args.gamma, source_name=src.name,
-        )
-        save_comparison(args.compare_preprocess, figure)
-        record["compare_preprocess"] = str(args.compare_preprocess)
     if not args.quiet:
-        detail = f"{src.name}: angle {estimate.angle:+.3f} deg " \
-                 f"(method={estimate.method}, polarity={estimate.polarity})"
-        if "output" in record:
-            detail += f" -> {record['output']}"
-        print(detail)
+        print(f"{src.name}: [ladders] angle {apply_angle:+.3f} deg  ok={ok}  {res.get('reason', '')}")
     return record
 
 
@@ -115,11 +124,14 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     if args.compare and len(inputs) != 1:
         print("error: --compare is only valid with a single input", file=sys.stderr)
         return 2
-    if args.compare_preprocess and len(inputs) != 1:
-        print("error: --compare-preprocess is only valid with a single input", file=sys.stderr)
-        return 2
 
-    records: List[dict] = [_process_one(src, args) for src in inputs]
+    records: List[dict] = []
+    for src in inputs:
+        try:
+            records.append(_process_one(src, args))
+        except Exception as exc:  # noqa: BLE001 - keep the batch going
+            print(f"error: {src.name}: {exc}", file=sys.stderr)
+            records.append({"input": str(src), "error": str(exc)})
 
     if args.report:
         report_path = Path(args.report)

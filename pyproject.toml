@@ -21,6 +21,8 @@ dev = ["pytest>=7.0"]
 
 [project.scripts]
 geltilt = "geltilt.cli:main"
+geltilt-label = "geltilt.labeler:main"
+geltilt-proj = "geltilt.projview:main"
 
 [tool.setuptools.packages.find]
 include = ["geltilt*"]

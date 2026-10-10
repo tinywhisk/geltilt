@@ -3,12 +3,15 @@ from __future__ import annotations
 import numpy as np
 
 from geltilt.imageio import to_gray
+from geltilt.core import estimate_rotation
 from geltilt.rotation import rotate_image
 from geltilt.viz import (
     auto_contrast,
     content_window,
     display_crop,
     render_comparison,
+    render_gt_vs_algorithm,
+    render_pipeline,
     render_preprocessing_comparison,
     save_comparison,
 )
@@ -67,6 +70,23 @@ def test_to_gray_smoke():
 def test_render_preprocessing_comparison_shape(gel_factory):
     img = gel_factory()
     fig = render_preprocessing_comparison(img, source_name="gel.tif", panel_height=200)
+    assert fig.ndim == 3 and fig.shape[2] == 3
+    assert fig.dtype == np.uint8
+    assert fig.shape[0] > 200
+    assert fig.shape[1] > 100
+
+def test_render_pipeline_shape(gel_factory):
+    img = gel_factory()
+    estimate = estimate_rotation(img)
+    fig = render_pipeline(img, estimate, source_name="gel.tif", cell=(160, 160))
+    assert fig.ndim == 3 and fig.shape[2] == 3
+    assert fig.dtype == np.uint8
+    assert fig.shape[0] > 160
+    assert fig.shape[1] > 300
+
+def test_render_gt_vs_algorithm_shape(gel_factory):
+    img = gel_factory()
+    fig = render_gt_vs_algorithm(img, 4.0, -4.0, source_name="gel.tif", panel_height=200, index=7, index_total=26)
     assert fig.ndim == 3 and fig.shape[2] == 3
     assert fig.dtype == np.uint8
     assert fig.shape[0] > 200

@@ -46,17 +46,23 @@ def _prepare(
     polarity: str,
     use_roi: bool,
     downsample_to: Optional[int],
-) -> Tuple[np.ndarray, str, Optional[Tuple[int, int, int, int]]]:
+    mask_mode: Optional[str] = None,
+    segmenter=None,
+) -> Tuple[np.ndarray, str, Optional[Tuple[int, int, int, int]], Optional[np.ndarray]]:
     signal, pol, _ = to_signal(gray, polarity=polarity)
     signal = normalize_signal(signal)
+    band = None
+    if mask_mode:
+        from .bandmask import band_probability
+
+        band = band_probability(gray, segmenter=segmenter)
     h, w = signal.shape
     if downsample_to and max(h, w) > downsample_to:
         scale = downsample_to / float(max(h, w))
-        signal = cv2.resize(
-            signal,
-            (max(1, int(round(w * scale))), max(1, int(round(h * scale)))),
-            interpolation=cv2.INTER_AREA,
-        )
+        new_size = (max(1, int(round(w * scale))), max(1, int(round(h * scale))))
+        signal = cv2.resize(signal, new_size, interpolation=cv2.INTER_AREA)
+        if band is not None:
+            band = cv2.resize(band, new_size, interpolation=cv2.INTER_AREA)
     roi = None
     if use_roi:
         bbox = content_bbox(content_mask(signal))
@@ -65,8 +71,12 @@ def _prepare(
             spans_frame = (y1 - y0) >= 0.85 * h and (x1 - x0) >= 0.85 * w
             if not spans_frame and (y1 - y0) > 8 and (x1 - x0) > 8:
                 signal = signal[y0:y1, x0:x1]
+                if band is not None:
+                    band = band[y0:y1, x0:x1]
                 roi = bbox
-    return signal, pol, roi
+    if band is not None and mask_mode == "bands":
+        signal = signal * band
+    return signal, pol, roi, band
 
 
 def _scan(
@@ -75,6 +85,10 @@ def _scan(
     method: str,
     log: bool,
     max_angle: float,
+    band: Optional[np.ndarray] = None,
+    slab_suppress: bool = False,
+    band_thr: float = 0.5,
+    min_band_px: int = 2,
 ) -> np.ndarray:
     h, w = signal.shape
     frac = safe_crop_fraction(max_angle)
@@ -85,6 +99,12 @@ def _scan(
     for i, angle in enumerate(angles):
         rotated = rotate_image(signal, float(angle), center=center, fill=0.0)
         rotated = rotated[oy:oy + ch, ox:ox + cw]
+        if slab_suppress and band is not None:
+            rb = rotate_image(band, float(angle), center=center, fill=0.0)[oy:oy + ch, ox:ox + cw]
+            mass = (rb > band_thr).sum(axis=0)
+            bg = np.median(rotated, axis=0, keepdims=True)
+            keep = (mass >= min_band_px)[None, :]
+            rotated = np.where(keep, rotated, np.clip(rotated - bg, 0.0, None))
         scores[i] = orientation_score(rotated, method=method, log=log)
     return scores
 
@@ -99,6 +119,9 @@ def estimate_rotation(
     log: bool = True,
     use_roi: bool = True,
     downsample_to: Optional[int] = 1200,
+    band_mask: bool = False,
+    slab_suppress: bool = False,
+    segmenter=None,
 ) -> RotationEstimate:
     """Estimate the rotation (degrees) that makes lanes vertical.
 
@@ -106,25 +129,34 @@ def estimate_rotation(
     :func:`correct_rotation` / :func:`rotate_image`. It is found by maximising the
     sharpness of the vertical projection of the band smears over a coarse angle
     sweep, then refining with a fine sweep.
+
+    With ``band_mask=True`` the projection is restricted to GelGenie-segmented
+    band pixels (aggressive). With ``slab_suppress=True`` the smear signal is kept
+    but the gel slab edge is removed by column-detrending only those columns that
+    contain no band pixels -- fixing slab-edge lock-on without discarding smears.
     """
     if method not in MAXIMIZE:
         raise ValueError(f"unknown method {method!r}; choose from {sorted(MAXIMIZE)}")
     if max_angle <= 0:
         raise ValueError("max_angle must be positive")
 
+    mask_mode = "bands" if band_mask else "slab" if slab_suppress else None
     gray = to_gray(image)
-    work, pol, roi = _prepare(gray, polarity, use_roi, downsample_to)
+    work, pol, roi, band = _prepare(
+        gray, polarity, use_roi, downsample_to, mask_mode=mask_mode, segmenter=segmenter
+    )
 
     maximize = MAXIMIZE[method]
+    scan_kwargs = dict(band=band, slab_suppress=slab_suppress)
 
     coarse = np.arange(-max_angle, max_angle + coarse_step / 2, coarse_step)
-    coarse_scores = _scan(work, coarse, method, log, max_angle)
+    coarse_scores = _scan(work, coarse, method, log, max_angle, **scan_kwargs)
     best_coarse = float(coarse[int(np.argmax(coarse_scores) if maximize else np.argmin(coarse_scores))])
 
     lo = max(-max_angle, best_coarse - coarse_step)
     hi = min(max_angle, best_coarse + coarse_step)
     fine = np.arange(lo, hi + fine_step / 2, fine_step)
-    fine_scores = _scan(work, fine, method, log, max_angle)
+    fine_scores = _scan(work, fine, method, log, max_angle, **scan_kwargs)
     best_idx = int(np.argmax(fine_scores) if maximize else np.argmin(fine_scores))
     angle = float(np.clip(fine[best_idx], -max_angle, max_angle))
 
@@ -196,3 +228,22 @@ def auto_correct(
         image, estimate.angle, expand=expand, fill=fill, crop_to_content_flag=crop
     )
     return corrected, estimate
+
+def estimate_rotation_ladders(
+    image: np.ndarray,
+    segmenter=None,
+    model_path=None,
+    threshold: float = 0.5,
+    min_area: int = 30,
+) -> dict:
+    """The lane-based rotation estimator: GelGenie band mask -> centroids -> `ladders.estimate`.
+
+    Returns the ``ladders.estimate`` result dict (``ok``, ``angle``, ``se``, ``reason``,
+    ``warnings``, ``ladders``, ...). ``angle`` is passed as-is to :func:`correct_rotation`.
+    """
+    from . import ladders
+    from .banddetect import band_centroids, default_segmenter
+
+    seg = segmenter or default_segmenter(model_path)
+    xy = band_centroids(image, segmenter=seg, threshold=threshold, min_area=min_area)
+    return ladders.estimate(xy)

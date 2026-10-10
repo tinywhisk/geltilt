@@ -14,6 +14,15 @@ venv/
 # Editor
 .idea/
 .vscode/
-# Generated comparison figures (regenerate via --compare / --compare-preprocess)
+
+# Generated comparison figures (regenerate via the CLI)
 comparison.png
 preprocess_comparison.png
+pipeline.png
+
+# Batch / generated outputs
+rot_output/
+discrepencies/
+flatten_ridge/
+slab/
+smear_diag/

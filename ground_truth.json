@@ -1,0 +1,566 @@
+{
+  "20206417 55130-G.Tif": {
+    "angle": -0.6,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:11:29"
+  },
+  "20230402 36160 cds fag-dna 42 65 55130-1 55130-2 gfp.Tif": {
+    "angle": -0.1,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:14:03"
+  },
+  "20240410 XP11 55130-2 PARTIAL  ATPAD6-1.Tif": {
+    "angle": 1.1,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:14:27"
+  },
+  "2026 0508 PPA6-1 PPA6-2 13772.Tif": {
+    "angle": -2.8,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:16:11"
+  },
+  "2026-519 胡椒rna2 f1r2 f2r1 rna1f2r2.Tif": {
+    "angle": 1.4,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:16:33"
+  },
+  "20260403 3030 1450 825 RNA.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:16:53"
+  },
+  "20260403 35160 cds+gfp 55130+55130-2 55130-1.Tif": {
+    "angle": 0.5,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:17:08"
+  },
+  "20260403 35160.Tif": {
+    "angle": 0.4,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:17:29"
+  },
+  "20260403 MU55130.Tif": {
+    "angle": -1.7,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:17:47"
+  },
+  "20260407 13772-1 13772-2 MU13772  BGLII.Tif": {
+    "angle": -1.85,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:18:08"
+  },
+  "20260407 35160.Tif": {
+    "angle": -0.8,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:18:30"
+  },
+  "20260409 13772MU 35160-5941.Tif": {
+    "angle": 2.35,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:19:04"
+  },
+  "20260409 55130 MU-1.Tif": {
+    "angle": -2.9,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:19:30"
+  },
+  "20260409 MU13772.Tif": {
+    "angle": 0.7,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:19:55"
+  },
+  "20260409 PKSE-FAGAD.Tif": {
+    "angle": -0.9,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:20:10"
+  },
+  "20260413 PKSE-FAGAD-C XP11-1 5941-ATPAD6 MU55130 MU13772.Tif": {
+    "angle": -1.7,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:20:24"
+  },
+  "20260414 ATPAD-6.Tif": {
+    "angle": -0.8,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:20:34"
+  },
+  "20260414 XP11.Tif": {
+    "angle": -0.1,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:20:45"
+  },
+  "20260414AD6-1.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:20:55"
+  },
+  "20260416 121-35160.Tif": {
+    "angle": 1.6,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:21:16"
+  },
+  "20260416 65-1 42-1 13772.Tif": {
+    "angle": 2.6,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:22:02"
+  },
+  "20260416 ATPAD.Tif": {
+    "angle": 0.7,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:22:16"
+  },
+  "20260417 65-1 42-1 XP11-2  ATPAD6-1.Tif": {
+    "angle": 0.1,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:22:29"
+  },
+  "20260420 55130-G 35160-121.Tif": {
+    "angle": 0.8,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:24:15"
+  },
+  "20260420 55140-G ATLUCK 121-35160 MU13772.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:24:21"
+  },
+  "20260420 caAAP6 55130-2 55130-2 13772-1 13772-2.Tif": {
+    "angle": 1.1,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:24:33"
+  },
+  "20260421 131-YFP-PPA6 55130-GDNA.Tif": {
+    "angle": -1.3,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:24:48"
+  },
+  "20260421 65-2 42-2 11-2 PPA6-2.Tif": {
+    "angle": 3.1,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:25:00"
+  },
+  "20260422 42-2 65-2 11-2 ppad6-2 AAP6-YFP.Tif": {
+    "angle": 2.1,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:25:26"
+  },
+  "20260422 ATLUCKY CAAP6.Tif": {
+    "angle": 1.3,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:25:49"
+  },
+  "20260422 XP11-1 XP11-COLONY.Tif": {
+    "angle": 2.9,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:26:21"
+  },
+  "20260423 131-CAAAP6-YFP 1300-ATLUCKY.Tif": {
+    "angle": 2.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:26:55"
+  },
+  "20260423 131-CAAAP6-YFP.Tif": {
+    "angle": 1.6,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:27:14"
+  },
+  "20260423 65-1 65-2.Tif": {
+    "angle": -2.6,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:27:53"
+  },
+  "20260424 11-1 11-2 65-1 65-2 55130-G.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:27:55"
+  },
+  "20260424 131-AAPA6-YFP 65RNAI 5941-ATPPA6-1.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:27:57"
+  },
+  "20260424 42-1 42-2  MU13772.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:28:01"
+  },
+  "20260427 65-1 65-2 11-1 11-2 测序.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:28:08"
+  },
+  "20260427 aap6  ppa6-2.Tif": {
+    "angle": 0.3,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:28:19"
+  },
+  "20260428 15810 990 酵母膜蛋白质粒.Tif": {
+    "angle": 2.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:28:33"
+  },
+  "20260428 25110 402 rna.Tif": {
+    "angle": -0.1,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:28:50"
+  },
+  "20260428 42rnai.Tif": {
+    "angle": 0.6,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:29:03"
+  },
+  "20260429 3.1 nhx.Tif": {
+    "angle": 3.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:29:20"
+  },
+  "20260429 990 13772-1 13772-2 55130-1 55130-2.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:29:32"
+  },
+  "20260430 42-1 65-1 11-1 42-2.Tif": {
+    "angle": -1.5,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:29:53"
+  },
+  "20260430 990-CE 990-NE 3,1-CE 3.1-NE XHX-VE NHX-CE.Tif": {
+    "angle": 0.9,
+    "comment": "有多块凝胶，旋转不统一",
+    "confirmed": true,
+    "updated": "2026-10-08T15:30:22"
+  },
+  "20260506 35160 AAP6 PPA6-1 990-BIFC 990-PBT.Tif": {
+    "angle": -0.7,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:30:37"
+  },
+  "20260506 NHX-N.Tif": {
+    "angle": -0.9,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:30:49"
+  },
+  "20260507 990-CE 990-NE 121-35160.Tif": {
+    "angle": 1.3,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:31:07"
+  },
+  "20260507 CE-1 CE-2 NE-1 NE-2 35160.Tif": {
+    "angle": 0.1,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:31:16"
+  },
+  "20260508 990-CE 990-NE NHX-CE NHX-NE 55130P G1 S2 ABC110 55130-CDS.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:31:24"
+  },
+  "20260508 PPA6-1 BX.Tif": {
+    "angle": -0.3,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:31:39"
+  },
+  "20260509 13772P.Tif": {
+    "angle": -2.8,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:31:58"
+  },
+  "20260509 G1-NE.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:32:03"
+  },
+  "20260509 PPA6-1PPA6-2 AAP6 990.Tif": {
+    "angle": -2.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:32:12"
+  },
+  "20260511 131-YFP AAP6.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:32:23"
+  },
+  "20260511 PFGC55130 3301-13772.Tif": {
+    "angle": 1.2,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:48:50"
+  },
+  "20260512 5941-ATPPA6-1 131-AAP6-YFP.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:32:48"
+  },
+  "20260512 SUPER1301-ABC11-NE.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:32:56"
+  },
+  "20260512 胡椒rna.Tif": {
+    "angle": 0.3,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:33:09"
+  },
+  "20260513 131-AAP6-YFP.Tif": {
+    "angle": -0.3,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:48:50"
+  },
+  "20260513 CR 990 35160 13772P.Tif": {
+    "angle": -1.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:33:28"
+  },
+  "20260513 G1-CE S2-NE S2-CE ABC11-CE 131-APP6-YFP.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:33:37"
+  },
+  "20260514 PPA6-2.Tif": {
+    "angle": 0.6,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:33:53"
+  },
+  "20260514PEPPER RNA.Tif": {
+    "angle": 1.4,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:34:08"
+  },
+  "20260515 121-35160-GFP PLAMID-CR PBT-990.Tif": {
+    "angle": 0.6,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:34:18"
+  },
+  "20260515 121-AAP6-GFP.Tif": {
+    "angle": 1.3,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:34:33"
+  },
+  "20260518 3820 14130 6770.Tif": {
+    "angle": -4.6,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:40:30"
+  },
+  "20260518 GFP 15810 2300 990 3510-GFP 35160P+CDS.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:40:38"
+  },
+  "20260519 14130 3820.Tif": {
+    "angle": 1.2,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:40:49"
+  },
+  "20260519 PBT-15810 121-GFP-HIS.Tif": {
+    "angle": -0.5,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:41:10"
+  },
+  "20260520 2300-7670-GFP下排 pig -1 -2 slerf2 cds.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:41:17"
+  },
+  "20260520 SLERF2GDNA.Tif": {
+    "angle": 3.5,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:41:35"
+  },
+  "20260521 121-SLERF.Tif": {
+    "angle": 1.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:48:51"
+  },
+  "20260521 121-SLERF2 2300-14130.Tif": {
+    "angle": 0.9,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:42:00"
+  },
+  "20260521 S001-F1 S001-F2 55130P 13772P 55130 CDS 13772 CDS.Tif": {
+    "angle": -0.3,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:42:13"
+  },
+  "20260522 3.1-NLUC NHX-CLUC 121-55130.Tif": {
+    "angle": 0.2,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:42:29"
+  },
+  "20260522 PEAR DL DCL NING1 FLOWER BUD RNA.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:42:37"
+  },
+  "20260525 CLUC-3.1.Tif": {
+    "angle": -2.3,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:43:06"
+  },
+  "20260525 LB F2R2 S001 EGG R5 R6.Tif": {
+    "angle": 1.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:43:14"
+  },
+  "20260526 alsv-cp607.Tif": {
+    "angle": 0.1,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:43:22"
+  },
+  "20260526 NHX 3.1 G1FLAG ABC11 S2 G1-NLUC 990-CKUC 14130  下排nhx-cluc.Tif": {
+    "angle": 0.1,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:48:52"
+  },
+  "20260526 rna1 5trace r4 r5.Tif": {
+    "angle": 0.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:43:48"
+  },
+  "20260527 14130 131-NHX 3.1-MCHERRY ABC-NLUC 990-CLUC S2 G1-NLUC ALSV-607.Tif": {
+    "angle": 3.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:44:08"
+  },
+  "20260527 14130 131-NHX 3.1-MCHERRY ABC-NLUC 990-CLUC S2ALSV-607 G1-NLUC.Tif": {
+    "angle": -0.3,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:44:19"
+  },
+  "20260527 SIS8  7846 3.1FLAG FAD2PF2R2 7385.Tif": {
+    "angle": 0.4,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:44:30"
+  },
+  "20260528 下排 s2-ce  1300-sis8-ce.Tif": {
+    "angle": 0.4,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:44:39"
+  },
+  "20260529 121-3.1 ERF2-C 14130-2 14130-3 SIS8-NE 7385-CE 7386-NE.Tif": {
+    "angle": 0.4,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:44:49"
+  },
+  "20260702 叶 花芽 01499.Tif": {
+    "angle": 2.6,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:45:12"
+  },
+  "20260811 62.Tif": {
+    "angle": -6.8,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:45:36"
+  },
+  "20260909 15 16 17 18 19 DMP8-B DMP9-R DMP9-B.Tif": {
+    "angle": -0.3,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:45:50"
+  },
+  "20260916 131-DMP9-YFP  PSY06-UBQ64 MAS X2-MCHERRY.Tif": {
+    "angle": 1.3,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:46:26"
+  },
+  "20260917 DMP9-1 DMP9-2 X.Tif": {
+    "angle": -2.0,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:46:27"
+  },
+  "20260917 UBQ64 6300-1 6300-2.Tif": {
+    "angle": 2.1,
+    "comment": "",
+    "confirmed": true,
+    "updated": "2026-10-08T15:48:49"
+  }
+}
