@@ -364,3 +364,69 @@ def test_set_composite_none_when_already_none_does_not_render(viewer):
     calls = _count_renders(viewer)
     viewer.set_composite(None)  # already None -> no render (fires every switch)
     assert calls == []
+
+# --------------------------------------------------------------------------- #
+# GelGenie mask overlay                                                         #
+# --------------------------------------------------------------------------- #
+def _mask():
+    m = np.zeros((80, 60), np.uint8)
+    m[20:60, 20:40] = 1
+    return m
+
+
+def test_mask_overlay_defaults_off_and_toggles(viewer):
+    viewer.set_image(_display())
+    assert viewer.show_mask is False      # default disabled
+    assert viewer._mask is None
+    viewer.set_mask(_mask())
+    assert viewer.show_mask is False      # wiring the mask does not enable it
+    viewer.toggle_overlay("mask")
+    assert viewer.show_mask is True
+    images = [i for i in viewer.canvas.find_all() if viewer.canvas.type(i) == "image"]
+    assert len(images) == 1               # still exactly one image surface
+    viewer.toggle_overlay("mask")
+    assert viewer.show_mask is False
+
+
+def test_mask_overlay_tints_at_50_percent(viewer):
+    from PIL import Image
+
+    viewer.set_image(_display())
+    viewer.set_mask(_mask())
+    base = Image.new("RGB", (400, 300), (100, 100, 100))
+    out = np.asarray(viewer._mask_overlay(base, 400, 300, 0))
+    assert out.shape == (300, 400, 3)
+    assert tuple(out[0, 0]) == (100, 100, 100)          # outside the mask: untouched
+    assert (out[..., 2].astype(int) > 100).any()         # inside: blue channel lifted
+
+# --------------------------------------------------------------------------- #
+# Cursor coordinate readout (raw, unrotated image pixels)                      #
+# --------------------------------------------------------------------------- #
+def test_cursor_reports_the_raw_image_pixel_under_the_cursor(viewer):
+    from geltilt.labeler import source_to_screen
+
+    viewer.set_image(_display())
+    viewer.set_rotation(3.0)
+    seen = []
+    viewer.bind_cursor(seen.append)
+    px, py = 25.0, 40.0
+    sx, sy = source_to_screen((px, py), viewer.angle, viewer.scale,
+                              viewer.anchor, viewer.center)
+    viewer._on_motion(_evt(sx, sy))
+    assert seen[-1] == (25, 40)             # unrotated source coordinates
+
+
+def test_cursor_is_none_off_the_image(viewer):
+    viewer.set_image(_display())
+    seen = []
+    viewer.bind_cursor(seen.append)
+    viewer._on_motion(_evt(-10000.0, -10000.0))
+    assert seen[-1] is None
+
+
+def test_cursor_cleared_when_the_pointer_leaves(viewer):
+    viewer.set_image(_display())
+    seen = []
+    viewer.bind_cursor(seen.append)
+    viewer._on_leave(_evt(0.0, 0.0))
+    assert seen[-1] is None

@@ -115,8 +115,15 @@ class AppController:
                 lane=self.click_lane, split=self.split_lane_at,
                 join=self.join_edge, move=self.move_edge, window=self.set_window,
             )
+        if viewer is not None and hasattr(viewer, "bind_cursor"):
+            viewer.bind_cursor(self._on_cursor)
 
     # -- callbacks ---------------------------------------------------------- #
+    def _on_cursor(self, pos) -> None:
+        """Relay the viewer's raw-image cursor pixel to the diagnostics panel."""
+        if self.panel is not None and hasattr(self.panel, "set_cursor"):
+            self.panel.set_cursor(pos)
+
     def _status(self, text: str) -> None:
         if self._status_cb is not None:
             self._status_cb(text)
@@ -232,10 +239,12 @@ class AppController:
                 else:
                     self.viewer.clear_crop()
                 self._apply_overlays(st.last_estimate)
+                self.viewer.set_mask(st.band_mask)
             if self.manual is not None:
                 self.manual.set_value(st.applied.value)
             if self.panel is not None:
                 self.panel.show_state(name, st.applied, st.last_estimate, st.failed)
+                self.panel.set_cursor(None)
             if self.browser is not None:
                 self.browser.set_active(self.index)
             self._notify_crop()
@@ -388,8 +397,26 @@ class AppController:
 
     # -- view / overlays ---------------------------------------------------- #
     def toggle_overlay(self, kind: str) -> None:
-        if self.viewer is not None:
-            self.viewer.toggle_overlay(kind)
+        if self.viewer is None:
+            return
+        if kind == "mask" and not self.viewer.show_mask:
+            self.viewer.set_mask(self._ensure_band_mask())  # compute on first enable
+        self.viewer.toggle_overlay(kind)
+
+    def _ensure_band_mask(self):
+        """The active sample's cached GelGenie band mask, computing it if needed."""
+        st = self._active_state()
+        path = self.active_sample()
+        if st is None or path is None:
+            return None
+        if st.band_mask is None:
+            try:
+                mask, _bbox = self._extract_bands(self.display.source_array(path))
+            except Exception as exc:  # noqa: BLE001
+                self._error("GelGenie masks", f"mask detection failed:\n{exc}")
+                return None
+            st.band_mask = mask
+        return st.band_mask
 
     def reset_view(self) -> None:
         if self.viewer is not None:
@@ -652,13 +679,22 @@ class AppController:
     def join_edge(self, index: int) -> None:
         if not self.composite_mode() or not self.layout:
             return
-        new_edges, removed = lanes.remove_edge(self.layout["edges"], index, lanes.LANE_MIN_PX)
+        edges = self.layout["edges"]
+        new_edges, removed = lanes.remove_edge(edges, index, lanes.LANE_MIN_PX)
         if removed is None:
             self._status(i18n.tr("status.border_stays"))
             return
+        outer = removed == 0 or removed == len(edges) - 1
+        n_lanes = len(edges) - 1
         self._apply_edges(new_edges)
         order = lanes.spec_groups(self.composite_groups) if self.composite_groups else []
-        self._set_order(lanes.renumber_after_merge(order, removed))
+        if outer:
+            order = lanes.renumber_after_remove_outer(order, removed, n_lanes)
+        else:
+            order = lanes.renumber_after_merge(order, removed)
+        self._set_order(order)
+        if outer:
+            self._sync_crop_to_composite()  # dropping an outer bound moves the region edge
         self._status(i18n.tr("status.border_removed", count=self.layout['count']))
 
     def move_edge(self, index: int, x: float, width: Optional[int] = None) -> None:
@@ -682,6 +718,9 @@ class AppController:
         else:
             y1 = max(float(qy), y0 + lanes.LANE_MIN_PX)
         st.crop = CropRect(x0, y0, x1, y1, angle=st.crop.angle)
+        # The window rows are the crop region's rows, so a Y change re-identifies the
+        # lanes over the new region (and untickes composite if fewer than two survive).
+        self._on_crop_changed()
         self._sync_crop_to_composite()
         self._notify_composite()
 

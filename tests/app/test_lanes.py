@@ -99,11 +99,26 @@ def test_c8_insert_edge_refusals_and_success():
 
 
 def test_c8_remove_edge_refusals_and_success():
-    assert lanes.remove_edge([0, 50, 100], 1)[1] is None      # only two lanes
-    assert lanes.remove_edge([0, 30, 60, 90], 0)[1] is None   # outer boundary
-    assert lanes.remove_edge([0, 30, 60, 90], 3)[1] is None   # outer boundary
-    new, index = lanes.remove_edge([0, 30, 60, 90], 2)
+    assert lanes.remove_edge([0, 50, 100], 1)[1] is None      # inner join needs >=2 lanes left
+    new, index = lanes.remove_edge([0, 30, 60, 90], 2)         # inner join: merges two lanes
     assert index == 2 and new == [0, 30, 90]
+
+
+def test_c8_remove_outer_boundary_is_allowed():
+    # dropping boundary 0 removes lane 1 and shifts the rest down
+    new, index = lanes.remove_edge([0, 30, 60, 90], 0)
+    assert index == 0 and new == [30, 60, 90]
+    # dropping the last boundary removes the last lane
+    new, index = lanes.remove_edge([0, 30, 60, 90], 3)
+    assert index == 3 and new == [0, 30, 60]
+    # an outer drop keeps going down to a single lane, then stops
+    assert lanes.remove_edge([0, 30], 0)[1] is None
+
+
+def test_renumber_after_remove_outer():
+    assert lanes.renumber_after_remove_outer([1, 2, 3], 0, 3) == [1, 2]   # lane 1 gone, shift down
+    assert lanes.renumber_after_remove_outer([2, 3], 0, 3) == [1, 2]
+    assert lanes.renumber_after_remove_outer([1, 2, 3], 3, 3) == [1, 2]   # last lane gone
 
 
 def test_move_edge_moves_inner_and_outer_boundaries():

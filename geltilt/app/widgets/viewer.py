@@ -38,6 +38,8 @@ GUIDE_COLOR = "#ffe000"
 
 CENTROID_COLOR = "#ff40ff"
 LANE_COLOR = "#00ff66"
+MASK_COLOR = (0, 176, 255)  # RGB blue for the GelGenie band-mask overlay
+MASK_OPACITY = 0.5          # 50% opacity, per request
 
 CROP_COLOR = "#ffe000"
 CROP_DIM = (150, 0, 0, 130)  # dark red wash over the cropped-out regions
@@ -78,6 +80,7 @@ class SingleViewer(ttk.Frame):
         self._crop_new_screen: Optional[Point] = None
         self._crop_prev: Optional[Tuple[float, float, float, float]] = None
         self._crop_on_change = None
+        self._cursor_cb = None
 
         self._batch = 0          # >0 while several setters are coalesced into one render
         self._render_dirty = False
@@ -93,8 +96,10 @@ class SingleViewer(ttk.Frame):
         self.show_guides = False
         self.show_centroids = False
         self.show_lane_lines = False
+        self.show_mask = False          # GelGenie band-mask overlay, off by default
         self._centroids: Optional[np.ndarray] = None
         self._lanes: Sequence[LaneLine] = ()
+        self._mask: Optional[np.ndarray] = None
 
         self.canvas.bind("<Configure>", self._on_configure)
         self.canvas.bind("<ButtonPress-1>", self._on_press)
@@ -105,7 +110,7 @@ class SingleViewer(ttk.Frame):
         self.canvas.bind("<B3-Motion>", self._on_pan_drag)
         self.canvas.bind("<ButtonRelease-3>", self._on_pan_release)
         self.canvas.bind("<Motion>", self._on_motion)
-        self.canvas.bind("<Leave>", lambda e: self.canvas.config(cursor=""))
+        self.canvas.bind("<Leave>", self._on_leave)
         self.canvas.bind("<MouseWheel>", self._on_wheel)
         self.canvas.bind("<Button-4>", lambda e: self._zoom(1.1, e.x, e.y))
         self.canvas.bind("<Button-5>", lambda e: self._zoom(1 / 1.1, e.x, e.y))
@@ -146,6 +151,12 @@ class SingleViewer(ttk.Frame):
             self.show_guides = bool(guides)
         self._render()
 
+    def set_mask(self, mask) -> None:
+        """Set the source-frame GelGenie band mask drawn by the mask overlay."""
+        self._mask = None if mask is None else np.asarray(mask)
+        if self.show_mask:
+            self._render()
+
     def toggle_overlay(self, kind: str) -> None:
         if kind == "guides":
             self.show_guides = not self.show_guides
@@ -153,6 +164,8 @@ class SingleViewer(ttk.Frame):
             self.show_centroids = not self.show_centroids
         elif kind == "lane_lines":
             self.show_lane_lines = not self.show_lane_lines
+        elif kind == "mask":
+            self.show_mask = not self.show_mask
         else:
             raise ValueError(f"unknown overlay kind: {kind!r}")
         self._render()
@@ -160,6 +173,14 @@ class SingleViewer(ttk.Frame):
     # -- crop --------------------------------------------------------------- #
     def bind_crop_change(self, callback) -> None:
         self._crop_on_change = callback
+
+    def bind_cursor(self, callback) -> None:
+        """Register ``callback((x, y) | None)`` with raw (unrotated) image pixels.
+
+        The readout is in *source* pixels, so it survives rotation/zoom/pan; the
+        callback receives ``None`` when the cursor is off the image.
+        """
+        self._cursor_cb = callback
 
     def set_crop(self, rect) -> None:
         self._crop = None if rect is None else tuple(float(v) for v in rect[:4])
@@ -435,6 +456,8 @@ class SingleViewer(ttk.Frame):
                 img = self._composite_tint(img, W, H, pad)
             elif self._crop is not None:
                 img = self._composite_crop(img, W, H, pad)
+            if self.show_mask and self._mask is not None:
+                img = self._mask_overlay(img, W, H, pad)
             self._imgtk = ImageTk.PhotoImage(img)
             self.canvas.delete("all")
             self._img_item = self.canvas.create_image(-pad, -pad, anchor="nw", image=self._imgtk)
@@ -469,6 +492,21 @@ class SingleViewer(ttk.Frame):
             self._draw_composite(w, h)
         elif self._crop is not None:
             self._draw_crop()
+
+    def _mask_overlay(self, img: Image.Image, w: int, h: int, off: float = 0.0) -> Image.Image:
+        """Tint the GelGenie band mask over the frame at ``MASK_OPACITY`` (50%)."""
+        m = np.asarray(self._mask, dtype=np.float32)
+        peak = float(m.max()) if m.size else 0.0
+        if peak > 1.0:
+            m = m / peak
+        mask_pil = Image.fromarray((np.clip(m, 0, 1) * 255).astype(np.uint8), mode="L")
+        cx, cy = self.center
+        screen = render_display(mask_pil, (w, h), self.angle, self.scale,
+                                self.anchor, (cx + off, cy + off))
+        alpha = screen.point(lambda v: int(v * MASK_OPACITY))
+        overlay = Image.new("RGBA", (w, h), MASK_COLOR + (0,))
+        overlay.putalpha(alpha)
+        return Image.alpha_composite(img.convert("RGBA"), overlay).convert("RGB")
 
     def _composite_crop(self, img: Image.Image, w: int, h: int, off: float = 0.0) -> Image.Image:
         x0, y0, x1, y1 = self._crop_screen_rect()
@@ -664,6 +702,23 @@ class SingleViewer(ttk.Frame):
         cursor = self._cursor_for(event.x, event.y)
         if self.canvas.cget("cursor") != cursor:
             self.canvas.config(cursor=cursor)
+        self._report_cursor(event.x, event.y)
+
+    def _report_cursor(self, sx: float, sy: float) -> None:
+        if self._cursor_cb is None:
+            return
+        px, py = screen_to_source((sx, sy), self.angle, self.scale, self.anchor, self.center)
+        w, h = self._src_shape
+        if 0.0 <= px < w and 0.0 <= py < h:
+            self._cursor_cb((int(round(px)), int(round(py))))
+        else:
+            self._cursor_cb(None)
+
+    def _on_leave(self, _event: tk.Event) -> None:
+        if self.canvas.cget("cursor") != "":
+            self.canvas.config(cursor="")
+        if self._cursor_cb is not None:
+            self._cursor_cb(None)
 
     def _on_middle_click(self, event: tk.Event) -> None:
         if self._composite is None:

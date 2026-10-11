@@ -83,6 +83,11 @@ def test_vertical_guides_are_off_by_default(window):
     assert window.viewer.show_guides is False
 
 
+def test_gelgenie_masks_overlay_is_off_by_default(window):
+    assert window.mask_var.get() is False
+    assert window.viewer.show_mask is False
+
+
 def test_dpi_scale_is_at_least_one(window):
     assert window.app_config.ui_scale >= 1.0
 

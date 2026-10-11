@@ -219,11 +219,20 @@ def insert_edge(edges: Sequence[int], x: float, min_side: int = LANE_MIN_PX):
 
 
 def remove_edge(edges: Sequence[int], index: int, min_side: int = LANE_MIN_PX):
-    """Join: drop an inner boundary. Returns (edges, index) or (edges, None)."""
+    """Drop a boundary. Returns ``(edges, index)`` or ``(edges, None)``.
+
+    An **inner** boundary joins its two neighbouring lanes into one (kept only while at
+    least two lanes remain, so it stays rearrangeable). An **outer** boundary drops the
+    lane at that end of the region — allowed as long as at least one lane is left.
+    """
     edges = [int(e) for e in edges]
-    if len(edges) < 4:
+    if index < 0 or index >= len(edges):
         return edges, None
-    if index <= 0 or index >= len(edges) - 1:
+    outer = index == 0 or index == len(edges) - 1
+    if outer:
+        if len(edges) < 3:      # need at least one lane left
+            return edges, None
+    elif len(edges) < 4:        # keep at least two lanes for an inner join
         return edges, None
     new = list(edges)
     new.pop(index)
@@ -241,6 +250,17 @@ def renumber_after_merge(order: Sequence[int], lane: int) -> List[int]:
         if n not in seen:
             seen.append(n)
     return seen
+
+
+def renumber_after_remove_outer(order: Sequence[int], index: int, n_lanes: int) -> List[int]:
+    """Renumber ``order`` after an outer boundary is dropped (``n_lanes`` = old count).
+
+    Dropping boundary ``0`` removes lane 1 and shifts every higher lane down by one;
+    dropping the last boundary removes the last lane and leaves the others as they are.
+    """
+    if index == 0:
+        return [n - 1 for n in order if n != 1]
+    return [n for n in order if n != n_lanes]
 
 
 # --------------------------------------------------------------------------- #

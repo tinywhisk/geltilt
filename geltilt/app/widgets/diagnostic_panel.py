@@ -32,6 +32,7 @@ class DiagnosticPanel(ttk.LabelFrame):
             "uncertainty": tk.StringVar(value=i18n.tr("diag.dash")),
             "bands": tk.StringVar(value=i18n.tr("diag.dash")),
             "lanes": tk.StringVar(value=i18n.tr("diag.dash")),
+            "cursor": tk.StringVar(value=i18n.tr("diag.dash")),
             "warnings": tk.StringVar(value=i18n.tr("diag.no_warnings")),
         }
 
@@ -42,6 +43,7 @@ class DiagnosticPanel(ttk.LabelFrame):
             ("diag.uncertainty", "uncertainty"),
             ("diag.bands", "bands"),
             ("diag.lanes", "lanes"),
+            ("diag.cursor", "cursor"),
         ]
         body = ttk.Frame(self)
         body.pack(fill="x", padx=6, pady=(4, 2))
@@ -67,6 +69,14 @@ class DiagnosticPanel(ttk.LabelFrame):
                   wraplength=text_len).grid(row=1, column=1, sticky="w", padx=(4, 0))
 
     # -- port --------------------------------------------------------------- #
+    def set_cursor(self, pos: Optional[tuple]) -> None:
+        """Show the raw-image pixel under the cursor (``(x, y)``), or clear it."""
+        if pos is None:
+            self._vars["cursor"].set(i18n.tr("diag.dash"))
+        else:
+            x, y = pos
+            self._vars["cursor"].set(f"{x}, {y}")
+
     def show_empty(self) -> None:
         self._vars["sample"].set(i18n.tr("diag.dash"))
         self._vars["applied"].set(i18n.tr("diag.none"))
@@ -75,6 +85,7 @@ class DiagnosticPanel(ttk.LabelFrame):
         self._vars["uncertainty"].set(i18n.tr("diag.dash"))
         self._vars["bands"].set(i18n.tr("diag.dash"))
         self._vars["lanes"].set(i18n.tr("diag.dash"))
+        self.set_cursor(None)
         self._set_warnings(())
 
     def show_state(

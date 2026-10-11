@@ -172,6 +172,7 @@ class AppWindow(tk.Tk):
         self.guides_var = tk.BooleanVar(value=False)
         self.centroids_var = tk.BooleanVar(value=False)
         self.lane_lines_var = tk.BooleanVar(value=False)
+        self.mask_var = tk.BooleanVar(value=False)  # GelGenie masks overlay: off by default
         ttk.Checkbutton(overlays, text=i18n.tr("check.vertical_guides"), variable=self.guides_var,
                         command=lambda: self._toggle_overlay("guides")).pack(anchor="w")
         ttk.Checkbutton(overlays, text=i18n.tr("check.band_centroids"),
@@ -180,6 +181,9 @@ class AppWindow(tk.Tk):
         ttk.Checkbutton(overlays, text=i18n.tr("check.lane_lines"),
                         variable=self.lane_lines_var,
                         command=lambda: self._toggle_overlay("lane_lines")).pack(anchor="w")
+        ttk.Checkbutton(overlays, text=i18n.tr("check.gelgenie_masks"),
+                        variable=self.mask_var,
+                        command=lambda: self._toggle_overlay("mask")).pack(anchor="w")
 
         # Diagnostics.
         self.panel = DiagnosticPanel(right, ui_scale=scale)

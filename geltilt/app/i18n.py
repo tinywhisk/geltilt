@@ -69,6 +69,7 @@ _STRINGS: Dict[str, Dict[str, str]] = {
     "check.vertical_guides": {"en": "Vertical guides", "zh": "\u5782\u76f4\u53c2\u8003\u7ebf"},
     "check.band_centroids": {"en": "Band centroids", "zh": "\u6761\u5e26\u8d28\u5fc3"},
     "check.lane_lines": {"en": "Accepted lane lines", "zh": "\u5df2\u63a5\u53d7\u7684\u6cf3\u9053\u7ebf"},
+    "check.gelgenie_masks": {"en": "GelGenie masks", "zh": "GelGenie \u63a9\u819c"},
 
     # -- diagnostics panel -------------------------------------------------
     "group.diagnostics": {"en": "Diagnostics", "zh": "\u8bca\u65ad"},
@@ -78,6 +79,7 @@ _STRINGS: Dict[str, Dict[str, str]] = {
     "diag.uncertainty": {"en": "Uncertainty", "zh": "\u4e0d\u786e\u5b9a\u5ea6"},
     "diag.bands": {"en": "Bands", "zh": "\u6761\u5e26"},
     "diag.lanes": {"en": "Lanes used/found", "zh": "\u6cf3\u9053 \u5df2\u7528/\u53d1\u73b0"},
+    "diag.cursor": {"en": "Cursor (raw)", "zh": "\u5149\u6807\uff08\u539f\u59cb\uff09"},
     "diag.reason": {"en": "Reason:", "zh": "\u539f\u56e0\uff1a"},
     "diag.warnings": {"en": "Warnings:", "zh": "\u8b66\u544a\uff1a"},
     "diag.none": {"en": "none (no rotation)", "zh": "\u65e0\uff08\u672a\u65cb\u8f6c\uff09"},
@@ -149,10 +151,9 @@ _STRINGS: Dict[str, Dict[str, str]] = {
     "status.border_added": {"en": "Border added \u2014 {count} lanes now.",
                             "zh": "\u5df2\u6dfb\u52a0\u8fb9\u754c \u2014\u2014 \u73b0\u6709 {count} \u6761\u6cf3\u9053\u3002"},
     "status.border_stays": {
-        "en": "That border stays: the two outer ones hold the lane region, and two "
-              "lanes are the fewest that can be rearranged.",
-        "zh": "\u8be5\u8fb9\u754c\u4fdd\u7559\uff1a\u4e24\u6761\u5916\u4fa7\u8fb9\u754c\u6784\u6210\u6cf3\u9053\u533a\u57df\uff0c"
-              "\u4e14\u81f3\u5c11\u9700\u8981\u4e24\u6761\u6cf3\u9053\u624d\u80fd\u8c03\u6574\u3002",
+        "en": "That border stays: an outer boundary can be dropped right down to a "
+              "single lane, and an inner join keeps at least two lanes.",
+        "zh": "该边界保留：外侧边界可删除至仅剩一条泳道；内侧合并至少需要两条泳道。",
     },
     "status.border_removed": {"en": "Border removed \u2014 {count} lanes now.",
                               "zh": "\u5df2\u79fb\u9664\u8fb9\u754c \u2014\u2014 \u73b0\u6709 {count} \u6761\u6cf3\u9053\u3002"},

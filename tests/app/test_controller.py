@@ -22,6 +22,9 @@ class _RecordingViewer:
         self.crops = []
         self.cleared = 0
         self.change_cb = None
+        self.show_mask = False
+        self.masks = []
+        self.toggled = []
 
     def set_image(self, _u8, reset: bool = True) -> None:
         pass
@@ -31,6 +34,14 @@ class _RecordingViewer:
 
     def set_overlays(self, _centroids=None, _lanes=None) -> None:
         pass
+
+    def set_mask(self, mask) -> None:
+        self.masks.append(mask)
+
+    def toggle_overlay(self, kind: str) -> None:
+        self.toggled.append(kind)
+        if kind == "mask":
+            self.show_mask = not self.show_mask
 
     def bind_crop_change(self, callback) -> None:
         self.change_cb = callback
@@ -474,6 +485,26 @@ def test_composite_split_and_join_renumber(app_config, tmp_path):
     assert controller.layout["count"] == 3  # back down after the join
 
 
+def test_join_edge_can_drop_outer_boundaries(app_config, tmp_path):
+    folder, mask = _composite_folder(tmp_path)
+    controller = _make_controller(app_config, FakeEstimator(make_outcome(ok=True, angle=0.0)),
+                                  extract_bands=lambda a: (mask, (5, 20, 65, 40)))
+    controller.open_folder(folder)
+    controller.trigger_auto_rotate()
+    pump(controller)
+    controller.auto_crop()
+    controller.set_composite(True)
+    assert controller.layout["count"] == 3
+    controller.set_composite_spec("1,2,3")
+
+    controller.join_edge(0)                     # drop the leftmost bound -> lane 1 removed
+    assert controller.layout["count"] == 2
+    assert controller.composite_text == "1,2"   # old lanes 2,3 renumbered down
+
+    controller.join_edge(len(controller.layout["edges"]) - 1)  # drop the rightmost bound
+    assert controller.layout["count"] == 1      # allowed down to a single lane
+
+
 def test_composite_window_and_outer_bounds_resize_the_crop(app_config, tmp_path):
     folder, mask = _composite_folder(tmp_path)
     controller = _make_controller(app_config, FakeEstimator(make_outcome(ok=True, angle=0.0)),
@@ -499,6 +530,26 @@ def test_composite_window_and_outer_bounds_resize_the_crop(app_config, tmp_path)
     assert controller.state.get("g.png").crop.y0 == pytest.approx(y0 + 25)
 
 
+def test_set_window_reidentifies_lanes(app_config, tmp_path):
+    folder, mask = _composite_folder(tmp_path)
+    controller = _make_controller(app_config, FakeEstimator(make_outcome(ok=True, angle=0.0)),
+                                  extract_bands=lambda a: (mask, (5, 20, 65, 40)))
+    controller.open_folder(folder)
+    controller.trigger_auto_rotate()
+    pump(controller)
+    controller.auto_crop()
+    controller.set_composite(True)
+    calls = []
+    real = controller.reidentify_lanes
+
+    def counted(*a, **k):
+        calls.append(1)
+        return real(*a, **k)
+    controller.reidentify_lanes = counted
+    controller.set_window("top", controller.state.get("g.png").crop.y0 + 5)
+    assert calls, "changing a Y bound must recompute the lanes"
+
+
 def test_even_widths_nudges_against_the_widened_mask(app_config, tmp_path):
     folder, mask = _composite_folder(tmp_path)
     controller = _make_controller(app_config, FakeEstimator(make_outcome(ok=True, angle=0.0)),
@@ -515,6 +566,26 @@ def test_even_widths_nudges_against_the_widened_mask(app_config, tmp_path):
     controller.even_widths()
     x = controller.layout["edges"][1]
     assert not any(b["x0"] < x < b["x1"] for b in controller.layout["nudge_blobs"])
+
+
+# --------------------------------------------------------------------------- #
+# GelGenie mask overlay                                                         #
+# --------------------------------------------------------------------------- #
+def test_mask_overlay_computes_the_mask_on_first_enable(app_config, sample_folder):
+    viewer = _RecordingViewer()
+    controller = _make_controller(app_config, FakeEstimator(make_outcome(ok=True, angle=0.0)),
+                                  viewer=viewer, extract_bands=_bands((5, 5, 25, 30)))
+    controller.open_folder(sample_folder)
+    assert viewer.show_mask is False
+
+    controller.toggle_overlay("mask")               # enable -> computes + pushes the mask
+    assert viewer.show_mask is True
+    assert viewer.masks[-1] is not None
+
+    pushes = len(viewer.masks)
+    controller.toggle_overlay("mask")               # disable -> no recompute
+    assert viewer.show_mask is False
+    assert len(viewer.masks) == pushes
 
 
 # --------------------------------------------------------------------------- #
@@ -547,3 +618,40 @@ def test_source_images_are_never_modified(app_config, sample_folder):
     # no corrected/cropped image files written into the run directory
     written = {p.suffix.lower() for p in app_config.run_dir.iterdir()}
     assert written.isdisjoint({".png", ".tif", ".tiff", ".jpg", ".jpeg", ".bmp"})
+
+# --------------------------------------------------------------------------- #
+# Cursor coordinate relay (viewer -> diagnostics panel)                        #
+# --------------------------------------------------------------------------- #
+class _CursorPanel:
+    def __init__(self):
+        self.pos = "unset"
+
+    def set_cursor(self, pos):
+        self.pos = pos
+
+
+class _CursorViewer:
+    """Minimal viewer exposing only the cursor hook."""
+
+    def __init__(self):
+        self.cb = None
+
+    def bind_cursor(self, callback):
+        self.cb = callback
+
+
+def test_controller_binds_the_viewer_cursor_hook(app_config):
+    controller = AppController(FakeRoot(), app_config, estimator=FakeEstimator())
+    viewer = _CursorViewer()
+    controller.attach(None, viewer, None, None)
+    assert viewer.cb == controller._on_cursor
+
+
+def test_controller_relays_cursor_pixels_to_the_panel(app_config):
+    controller = AppController(FakeRoot(), app_config, estimator=FakeEstimator())
+    panel = _CursorPanel()
+    controller.attach(None, None, None, panel)
+    controller._on_cursor((123, 456))
+    assert panel.pos == (123, 456)
+    controller._on_cursor(None)
+    assert panel.pos is None

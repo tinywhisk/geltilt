@@ -65,3 +65,17 @@ def test_panel_reflects_active_sample(tk_root):
     panel.show_state("second.png", AppliedRotation(0.0, "none"), None)
     assert panel._vars["sample"].get() == "second.png"
     assert panel._vars["applied"].get().startswith("+0.0")
+
+def test_panel_shows_and_clears_the_cursor_readout(tk_root):
+    panel = DiagnosticPanel(tk_root)
+    panel.set_cursor((12, 34))
+    assert panel._vars["cursor"].get() == "12, 34"
+    panel.set_cursor(None)
+    assert panel._vars["cursor"].get() == "-"        # English is pinned in tests
+
+
+def test_panel_clears_cursor_on_empty(tk_root):
+    panel = DiagnosticPanel(tk_root)
+    panel.set_cursor((5, 6))
+    panel.show_empty()
+    assert panel._vars["cursor"].get() == "-"
