@@ -39,3 +39,18 @@ _measure/
 
 # ML model weights — large, fetched at build/run time, never versioned
 *.onnx
+# Not published to the repo (kept locally only) — design/spec docs + the older
+# labeler and projview standalone tools. NOTE: geltilt/labeler.py is app-core
+# and MUST stay tracked; only the standalone entries are excluded here.
+/SPEC-AUTOROTATE.md
+/SPEC-COMPOSITE.md
+/BAND_DETECTION.md
+/improved-rotation-alg/
+/run_labeler.py
+/run_projview.py
+/geltilt-label.spec
+/geltilt-projview.spec
+/geltilt/projview.py
+/tests/test_projview.py
+/ui_layout_reference.py
+/timeline.md
