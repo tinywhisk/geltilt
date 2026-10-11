@@ -35,6 +35,21 @@ def to_u8(arr: np.ndarray, lo: float, hi: float, gamma: float = 1.0) -> np.ndarr
     return (f * 255.0 + 0.5).astype(np.uint8)
 
 
+def preview_u8(arr: np.ndarray, gamma: float = 0.45, percentile: float = 99.7) -> np.ndarray:
+    """Display-only transform: ``clip(arr / p99.7, 0, 1) ** gamma`` scaled to uint8.
+
+    Unlike :func:`to_u8` there is no low-end subtraction; the image is simply
+    divided by a high percentile (so the brightest signal maps to ~1.0), clipped
+    and gamma-corrected. Returns a 2D uint8 grayscale array (feeding :func:`to_u8`
+    with these settings is equivalent to the reference ``preview`` snippet, minus
+    the BGR wrapping used only for OpenCV display).
+    """
+    gray = np.asarray(arr, dtype=np.float32)
+    scale = max(float(np.percentile(gray, percentile)), 1e-6)
+    v = np.clip(gray / scale, 0.0, 1.0) ** float(gamma)
+    return (v * 255.0).astype(np.uint8)
+
+
 def detect_polarity(gray: np.ndarray, background: Optional[float] = None) -> str:
     """Return 'bright' for bright bands on a dark background, else 'dark'.
 

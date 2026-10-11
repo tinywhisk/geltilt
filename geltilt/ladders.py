@@ -702,7 +702,7 @@ def _estimate(xy, params=None, verbose=False):
     if len(xy):
         xy = xy[np.isfinite(xy).all(1)]
     out = dict(n_bands=len(xy), angle=np.nan, contrast=np.nan, se=np.nan, ok=False,
-               ladders=[], n_ladders=0, reason='')
+               ladders=[], n_ladders=0, kept_lanes=[], reason='')
     if len(xy) < P['fallback_min_rungs']:
         # No lane of any kind is possible. Report against the achievable threshold, not min_rungs:
         # saying "fewer than 4 bands" for an image that only ever needed 2 is misleading.
@@ -770,7 +770,7 @@ def _estimate(xy, params=None, verbose=False):
                angle_rungs=float(ang_rung), se_rungs=float(se_rung),
                angle_invvar=float(angle_invvar), se_invvar=float(se_invvar),
                angle_trust_weighted=float(contrast), contrast=float(contrast),
-               se=float(se), ladders=lanes,
+               se=float(se), ladders=lanes, kept_lanes=pooled,
                kept=len(pooled), n_ladders=len(lanes), fallback=fallback,
                overdispersion=float(phi), lanes_used=int(k_used),
                min_rungs_used=(P['fallback_min_rungs'] if fallback else P['min_rungs']),

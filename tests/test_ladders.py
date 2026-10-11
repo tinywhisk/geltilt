@@ -53,3 +53,20 @@ def test_ladders_angle_sign_convention():
 def test_ladders_is_deterministic():
     xy, _ = synthetic_gel(2.5, seed=3)
     assert ladders.estimate(xy)["angle"] == ladders.estimate(xy)["angle"]
+
+def test_ladders_exposes_kept_lanes_additively():
+    xy, _ = synthetic_gel(1.5, seed=1)
+    res = ladders.estimate(xy)
+    assert res["ok"] is True
+    assert len(res["kept_lanes"]) == res["kept"]
+    for lane in res["kept_lanes"]:
+        assert {"s", "ybar", "idx"} <= set(lane)
+    # the scalar keys CLI parity relies on are unchanged
+    for key in ("angle", "se", "ok", "reason", "n_bands", "n_ladders", "kept", "fallback"):
+        assert key in res
+
+
+def test_ladders_kept_lanes_empty_on_refusal():
+    res = ladders.estimate(np.array([[10.0, 10.0]]))
+    assert res["ok"] is False
+    assert res["kept_lanes"] == []

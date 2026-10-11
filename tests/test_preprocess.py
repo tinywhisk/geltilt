@@ -8,6 +8,7 @@ from geltilt.preprocess import (
     content_mask,
     detect_polarity,
     normalize_signal,
+    preview_u8,
     robust_limits,
     to_signal,
     to_u8,
@@ -81,3 +82,20 @@ def test_to_u8_clips_out_of_range():
 def test_to_u8_gamma_brightens():
     arr = np.array([[0.25]], np.float32)
     assert to_u8(arr, 0.0, 1.0, gamma=0.5)[0, 0] > to_u8(arr, 0.0, 1.0)[0, 0]
+
+def test_preview_u8_scales_by_percentile_and_applies_gamma():
+    arr = np.array([[0.0, 25.0, 50.0, 200.0]], np.float32)
+    out = preview_u8(arr, gamma=0.45, percentile=99.7)
+    assert out.dtype == np.uint8
+    assert out[0, 0] == 0  # black background stays black
+    # everything above the p99.7 scale is clipped to 255
+    assert out[0, 3] == 255
+    # gamma 0.45 lifts midtones above the linear mapping
+    linear = np.clip(arr / np.percentile(arr, 99.7), 0, 1) * 255
+    assert out[0, 1] >= int(linear[0, 1])
+
+
+def test_preview_u8_rescales_bright_band_not_range():
+    arr = np.array([[0.0, 5.0, 10.0]], np.float32)
+    out = preview_u8(arr, gamma=1.0, percentile=100.0)
+    assert out.tolist() == [[0, 127, 255]]

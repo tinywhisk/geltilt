@@ -26,3 +26,16 @@ discrepencies/
 flatten_ridge/
 slab/
 smear_diag/
+# Per-run app/session state (not source)
+app_session.json
+app_runs.jsonl
+labeler_session.json
+projview_state.json
+sample_labels.json
+
+# Local diagnostics / scratch build dirs
+band_mask_diag/
+_measure/
+
+# ML model weights — large, fetched at build/run time, never versioned
+*.onnx
