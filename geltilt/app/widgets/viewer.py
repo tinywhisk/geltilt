@@ -22,6 +22,8 @@ from ...labeler import (
     screen_to_source,
     source_to_screen,
 )
+from .. import i18n
+from ..fonts import ui_font
 from ..crop import (
     normalize_rect,
     screen_rect,
@@ -401,8 +403,8 @@ class SingleViewer(ttk.Frame):
         w, h = self._canvas_size()
         self.canvas.create_text(
             w / 2, h / 2,
-            text="Open an image folder to start\n(ctrl+O)",
-            fill="#888888", font=("TkDefaultFont", 14), justify="center",
+            text=i18n.tr("viewer.empty"),
+            fill="#888888", font=ui_font(size=14), justify="center",
         )
 
     def _render(self, overlay_only: bool = False, pad: int = 0) -> None:

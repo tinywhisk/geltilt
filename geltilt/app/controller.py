@@ -12,7 +12,7 @@ from tkinter import messagebox
 
 from ..banddetect import band_mask, bbox_from_mask, default_segmenter
 from ..labeler import content_anchor, find_images
-from . import export, lanes
+from . import export, i18n, lanes
 from .config import AppConfig, ensure_run_directory
 from .crop import display_rect_to_corrected_box, pad_rect, rotate_mask, source_bbox_to_display_rect
 from .display import DisplayPreprocessor
@@ -31,24 +31,9 @@ from .service import EstimationService, EstimateResult
 from .session import JsonSessionStore, make_session
 from .state import SampleStateStore
 
-# English renderings of the lane-spec keys (SPEC-COMPOSITE §7.2, §13).
-_SPEC_MESSAGES = {
-    "lane_spec.empty": "Enter a lane spec, e.g. 3,1-2,4-6.",
-    "lane_spec.braces": "The fan-out form {{..}} is not supported yet.",
-    "lane_spec.empty_term": "There is an empty term (a stray comma).",
-    "lane_spec.unparsed": "Could not parse \u201c{term}\u201d.",
-    "lane_spec.not_positive": "Lane numbers start at 1.",
-    "lane_spec.out_of_range": "Lane {term} is out of range \u2014 {count} lane(s).",
-    "lane_spec.reversed": "Reversed range \u201c{term}\u201d.",
-}
-
-
+# Lane-spec keys are rendered through the i18n catalog (SPEC-COMPOSITE §7.2, §13).
 def _spec_message(exc) -> str:
-    tpl = _SPEC_MESSAGES.get(exc.key, exc.key)
-    try:
-        return tpl.format(**exc.kwargs)
-    except Exception:  # noqa: BLE001
-        return tpl
+    return i18n.tr(exc.key, **exc.kwargs)
 
 
 def _still_cutting(edges, blobs) -> int:
@@ -178,12 +163,13 @@ class AppController:
     def open_folder(self, path) -> bool:
         path = Path(path)
         if not path.is_dir():
-            self._error("Open folder", f"Not a folder:\n{path}")
+            self._error(i18n.tr("dlg.open_folder"), i18n.tr("msg.not_a_folder", path=path))
             return False
         images = find_images(path)
         if not images:
             exts = ", ".join(sorted(self.config.image_exts))
-            self._warn("Open folder", f"No supported images found in:\n{path}\n\nSupported: {exts}")
+            self._warn(i18n.tr("dlg.open_folder"),
+                       i18n.tr("msg.no_images", path=path, exts=exts))
             return False
         session = self.session_store.load()
         self.state = SampleStateStore.from_session(session)
@@ -194,7 +180,7 @@ class AppController:
             self.browser.set_samples([p.name for p in images])
         self._activate()
         self.save_session()
-        self._status(f"{len(images)} sample(s) in {path.name}")
+        self._status(i18n.tr("status.samples_in", count=len(images), name=path.name))
         return True
 
     def goto(self, index: int) -> None:
@@ -230,7 +216,7 @@ class AppController:
             self.state.mark_failed(name, True)
             if self.panel is not None:
                 self.panel.show_state(name, st.applied, None, failed=True)
-            self._error("Load error", f"could not load {name}:\n{exc}")
+            self._error(i18n.tr("dlg.load_error"), i18n.tr("msg.could_not_load", name=name, exc=exc))
             self._notify_crop()
             self._notify_composite()
             return
@@ -277,12 +263,13 @@ class AppController:
         try:
             arr = self.display.source_array(path)
         except Exception as exc:  # noqa: BLE001
-            self._error("Auto-rotate", f"could not load {name}:\n{exc}")
+            self._error(i18n.tr("dlg.auto_rotate"),
+                        i18n.tr("msg.could_not_load", name=name, exc=exc))
             return
         self.rotation_epoch += 1
         epoch = self.rotation_epoch
         self._busy(True)
-        self._status(f"estimating {name} ...")
+        self._status(i18n.tr("status.estimating_named", name=name))
         self.service.start(name, arr, epoch)
         self._start_polling()
 
@@ -311,8 +298,8 @@ class AppController:
                 reason=result.error, warnings=(),
             )
             self.diag_log.append(entry)
-            self._error("Estimate failed", f"{name}:\n{result.error}")
-            self._status("estimate failed")
+            self._error(i18n.tr("dlg.estimate_failed"), f"{name}:\n{result.error}")
+            self._status(i18n.tr("status.estimate_failed"))
             return
 
         outcome = result.outcome
@@ -338,7 +325,8 @@ class AppController:
         if self.panel is not None:
             self.panel.show_state(name, self.state.get_or_create(name).applied, outcome, st.failed)
         self._status(
-            f"applied {outcome.angle:+.1f} deg" if outcome.accepted else "estimate refused"
+            i18n.tr("status.applied", angle=f"{outcome.angle:+.1f}")
+            if outcome.accepted else i18n.tr("status.estimate_refused")
         )
         self._notify_crop()
         self.save_session()
@@ -440,23 +428,25 @@ class AppController:
             return
         st = self.state.get_or_create(name)
         if not self._crop_available(st):
-            self._warn("Auto crop", "Run Auto rotate before cropping.")
+            self._warn(i18n.tr("dlg.auto_crop"), i18n.tr("msg.run_auto_rotate_first"))
             return
         path = self.samples[self.index]
         try:
             arr = self.display.source_array(path)
             u8 = self.display.display_u8(path)
         except Exception as exc:  # noqa: BLE001
-            self._error("Auto crop", f"could not load {name}:\n{exc}")
+            self._error(i18n.tr("dlg.auto_crop"),
+                        i18n.tr("msg.could_not_load", name=name, exc=exc))
             return
         try:
             mask, bbox = self._extract_bands(arr)
         except Exception as exc:  # noqa: BLE001
-            self._error("Auto crop", f"band detection failed for {name}:\n{exc}")
+            self._error(i18n.tr("dlg.auto_crop"),
+                        i18n.tr("msg.band_detection_failed", name=name, exc=exc))
             return
         st.band_mask = mask  # cached for composite lane re-identification (T-7)
         if bbox is None:
-            self._warn("Auto crop", f"No bands detected in {name}.")
+            self._warn(i18n.tr("dlg.auto_crop"), i18n.tr("msg.no_bands", name=name))
             return
         anchor = content_anchor(u8)
         rect = source_bbox_to_display_rect(
@@ -469,7 +459,8 @@ class AppController:
             self.viewer.set_crop(rect)
         self._notify_crop()
         self.reidentify_lanes(announce=False)
-        self._status(f"auto crop: {rect[2] - rect[0]:.0f} x {rect[3] - rect[1]:.0f} px")
+        self._status(i18n.tr("status.auto_crop_size",
+                             w=f"{rect[2] - rect[0]:.0f}", h=f"{rect[3] - rect[1]:.0f}"))
 
     def clear_crop(self) -> None:
         name = self._active_name()
@@ -481,7 +472,7 @@ class AppController:
             self.viewer.clear_crop()
         self._on_crop_changed()
         self._notify_crop()
-        self._status("crop cleared")
+        self._status(i18n.tr("status.crop_cleared"))
 
     def set_crop(self, rect) -> None:
         """Store a crop rect dragged in the viewer (keeps the locked angle)."""
@@ -503,7 +494,7 @@ class AppController:
         if not self.composite_ready():
             self.composite_on = False  # R3: a ticked box with no lanes behind it
             self.composite_groups = None
-            self._status("Composite crop off — fewer than two lanes in the crop.")
+            self._status(i18n.tr("status.composite_off_few_lanes"))
 
     # -- composite crop (SPEC-COMPOSITE) ------------------------------------ #
     def _active_state(self):
@@ -545,12 +536,13 @@ class AppController:
         mask, box = self._lane_frame()
         if mask is None:
             if announce:
-                self._status("Auto crop first — composite cropping joins the lanes it finds.")
+                self._status(i18n.tr("status.auto_crop_first"))
             return False
         self.layout = lanes.lane_layout(mask, box)
         self._resync_spec()
         if announce:
-            self._status(f"Lanes re-identified from the crop — {self.layout['count']} lane(s).")
+            self._status(i18n.tr("status.lanes_reidentified",
+                                 count=self.layout['count']))
         self._notify_composite()
         return True
 
@@ -571,7 +563,7 @@ class AppController:
             if not (ok and self.composite_ready()):
                 self.composite_on = False
                 self.composite_groups = None
-                self._status("Auto crop first — composite cropping joins the lanes it finds.")
+                self._status(i18n.tr("status.auto_crop_first"))
                 self._notify_composite()
                 return False
             self.composite_on = True
@@ -580,7 +572,7 @@ class AppController:
         else:
             self.composite_on = False
             self.composite_groups = None
-            self._status("Composite crop off — the crop box applies again.")
+            self._status(i18n.tr("status.composite_off_crop_applies"))
         self._notify_composite()
         return self.composite_on
 
@@ -593,8 +585,8 @@ class AppController:
         try:
             self.composite_groups = lanes.parse_lane_spec(self.composite_text, int(self.layout["count"]))
             order = lanes.spec_groups(self.composite_groups)
-            self._status(f"Composite crop: {','.join(str(n) for n in order)} — "
-                         f"{len(order)} lane(s) joined in that order.")
+            self._status(i18n.tr("status.composite_spec",
+                                 order=",".join(str(n) for n in order), count=len(order)))
         except lanes.LaneSpecError as exc:
             self.composite_groups = None
             self._status(_spec_message(exc))
@@ -613,15 +605,15 @@ class AppController:
         self.layout["spans"] = lanes.spans_from_edges(new_edges)
         still = _still_cutting(new_edges, blobs)
         if not changed_even and nudged == 0:
-            status = "Lanes already even."
+            status = i18n.tr("status.lanes_already_even")
         elif changed_even and nudged == 0:
-            status = "Lanes evened."
+            status = i18n.tr("status.lanes_evened")
         elif not changed_even and nudged:
-            status = "Lanes nudged off the bands."
+            status = i18n.tr("status.lanes_nudged")
         else:
-            status = "Lanes evened and nudged off the bands."
+            status = i18n.tr("status.lanes_evened_nudged")
         if still:
-            status += f" {still} boundary(ies) still cut a band."
+            status += " " + i18n.tr("status.boundaries_still_cut", count=still)
         self._status(status)
         self._notify_composite()
 
@@ -631,13 +623,13 @@ class AppController:
         order = lanes.spec_groups(self.composite_groups) if self.composite_groups else []
         if lane in order:
             order.remove(lane)
-            verb = "removed"
+            verb = i18n.tr("status.lane_verb_removed")
         else:
             order.append(lane)
-            verb = "added"
+            verb = i18n.tr("status.lane_verb_added")
         self._set_order(order)
-        shown = ",".join(str(n) for n in order) if order else "(none)"
-        self._status(f"Lane {lane} {verb} — the figure is lanes {shown}.")
+        shown = ",".join(str(n) for n in order) if order else i18n.tr("status.none_placeholder")
+        self._status(i18n.tr("status.lane_click", lane=lane, verb=verb, shown=shown))
 
     def _set_order(self, order) -> None:
         deduped = list(dict.fromkeys(int(n) for n in order))
@@ -650,25 +642,24 @@ class AppController:
             return
         edges, index = lanes.insert_edge(self.layout["edges"], x, lanes.LANE_MIN_PX)
         if index is None:
-            self._status("No border added: too close to the border beside it, or outside the lanes.")
+            self._status(i18n.tr("status.no_border_added"))
             return
         self._apply_edges(edges)
         order = lanes.spec_groups(self.composite_groups) if self.composite_groups else []
         self._set_order(lanes.renumber_after_split(order, index))
-        self._status(f"Border added — {self.layout['count']} lanes now.")
+        self._status(i18n.tr("status.border_added", count=self.layout['count']))
 
     def join_edge(self, index: int) -> None:
         if not self.composite_mode() or not self.layout:
             return
         new_edges, removed = lanes.remove_edge(self.layout["edges"], index, lanes.LANE_MIN_PX)
         if removed is None:
-            self._status("That border stays: the two outer ones hold the lane region, and two "
-                         "lanes are the fewest that can be rearranged.")
+            self._status(i18n.tr("status.border_stays"))
             return
         self._apply_edges(new_edges)
         order = lanes.spec_groups(self.composite_groups) if self.composite_groups else []
         self._set_order(lanes.renumber_after_merge(order, removed))
-        self._status(f"Border removed — {self.layout['count']} lanes now.")
+        self._status(i18n.tr("status.border_removed", count=self.layout['count']))
 
     def move_edge(self, index: int, x: float, width: Optional[int] = None) -> None:
         if not self.composite_mode() or not self.layout:
@@ -804,37 +795,34 @@ class AppController:
 
     def save_as(self, dest, use_original: bool, apply_crop: bool = True) -> bool:
         if self.composite_ignored(apply_crop):
-            self._warn("Save as", "Composite crop is set, but Save/copy is \u201cRotation only\u201d. "
-                       "Choose \u201cRotation + crop\u201d, or untick composite cropping.")
+            self._warn(i18n.tr("dlg.save_as"), i18n.tr("msg.composite_rotation_only"))
             return False
         arr = self.export_array(use_original, apply_crop)
         if arr is None:
-            self._warn("Save as", "No image is open.")
+            self._warn(i18n.tr("dlg.save_as"), i18n.tr("msg.no_image_open"))
             return False
         try:
             export.save_image(dest, arr)
         except Exception as exc:  # noqa: BLE001
-            self._error("Save as", f"could not save:\n{exc}")
+            self._error(i18n.tr("dlg.save_as"), i18n.tr("msg.could_not_save", exc=exc))
             return False
-        self._status(f"saved {Path(dest).name}")
+        self._status(i18n.tr("status.saved", name=Path(dest).name))
         return True
 
     def copy_to_clipboard(self, use_original: bool, apply_crop: bool = True) -> bool:
         if self.composite_ignored(apply_crop):
-            self._warn("Copy to clipboard",
-                       "Composite crop is set, but Save/copy is \u201cRotation only\u201d. "
-                       "Choose \u201cRotation + crop\u201d, or untick composite cropping.")
+            self._warn(i18n.tr("dlg.copy_clipboard"), i18n.tr("msg.composite_rotation_only"))
             return False
         arr = self.export_array(use_original, apply_crop)
         if arr is None:
-            self._warn("Copy to clipboard", "No image is open.")
+            self._warn(i18n.tr("dlg.copy_clipboard"), i18n.tr("msg.no_image_open"))
             return False
         try:
             export.copy_tiff_to_clipboard(arr)
         except Exception as exc:  # noqa: BLE001
-            self._error("Copy to clipboard", f"could not copy:\n{exc}")
+            self._error(i18n.tr("dlg.copy_clipboard"), i18n.tr("msg.could_not_copy", exc=exc))
             return False
-        self._status("copied TIFF to clipboard")
+        self._status(i18n.tr("status.copied"))
         return True
 
     # -- persistence -------------------------------------------------------- #

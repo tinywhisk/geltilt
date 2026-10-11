@@ -8,6 +8,9 @@ from pathlib import Path
 import tkinter as tk
 from tkinter import ttk
 
+from . import i18n
+from .fonts import ui_font
+
 
 def bundle_root() -> Path:
     """Directory holding LICENSE / THIRD_PARTY_NOTICES.md (frozen bundle or repo root)."""
@@ -24,25 +27,25 @@ def licenses_text() -> str:
         if path.exists():
             chunks.append(path.read_text(encoding="utf-8", errors="replace").strip())
     separator = "\n\n" + "-" * 72 + "\n\n"
-    return separator.join(chunks) if chunks else "(license text not found)"
+    return separator.join(chunks) if chunks else i18n.tr("about.license_missing")
 
 
 def show_about(parent: tk.Misc, ui_scale: float = 1.0) -> tk.Toplevel:
     """Open a scrollable window with the license + third-party notices."""
     win = tk.Toplevel(parent)
-    win.title("About geltilt")
+    win.title(i18n.tr("about.title"))
     win.geometry(f"{int(760 * ui_scale)}x{int(560 * ui_scale)}")
     win.transient(parent)
 
     frame = ttk.Frame(win, padding=8)
     frame.pack(fill="both", expand=True)
-    text = tk.Text(frame, wrap="word", font=("TkDefaultFont", max(8, int(9 * ui_scale))))
+    text = tk.Text(frame, wrap="word", font=ui_font(size=max(8, int(9 * ui_scale))))
     scroll = ttk.Scrollbar(frame, orient="vertical", command=text.yview)
     text.configure(yscrollcommand=scroll.set)
     scroll.pack(side="right", fill="y")
     text.pack(side="left", fill="both", expand=True)
-    text.insert("1.0", "geltilt \u2014 gel electrophoresis image editor\n\n" + licenses_text())
+    text.insert("1.0", i18n.tr("about.header") + "\n\n" + licenses_text())
     text.configure(state="disabled")
 
-    ttk.Button(win, text="Close", command=win.destroy).pack(pady=6)
+    ttk.Button(win, text=i18n.tr("btn.close"), command=win.destroy).pack(pady=6)
     return win

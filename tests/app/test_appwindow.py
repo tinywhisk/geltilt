@@ -85,3 +85,28 @@ def test_vertical_guides_are_off_by_default(window):
 
 def test_dpi_scale_is_at_least_one(window):
     assert window.app_config.ui_scale >= 1.0
+
+
+def test_window_applies_a_preferred_ui_font(window):
+    from tkinter import font as tkfont
+
+    from geltilt.app import fonts
+
+    family = tkfont.nametofont("TkDefaultFont").actual("family")
+    assert family in fonts.PREFERRED_FAMILIES
+
+def test_window_builds_in_default_chinese(monkeypatch, tmp_path):
+    from geltilt.app import config as app_config
+
+    monkeypatch.setattr(app_config, "load_language", lambda run_dir=None: "zh")
+    try:
+        win = AppWindow(run_dir=str(tmp_path / "run_zh"))
+    except tk.TclError:  # pragma: no cover - headless
+        pytest.skip("no display available for Tk")
+    win.withdraw()
+    try:
+        assert win.lang_box.get() == "\u7b80\u4f53\u4e2d\u6587"
+        assert "\u81ea\u52a8\u65cb\u8f6c" in set(_buttons(win))  # Auto rotate
+        assert win.export_mode.get() == "\u65cb\u8f6c + \u88c1\u526a"  # Rotation + crop
+    finally:
+        win.destroy()

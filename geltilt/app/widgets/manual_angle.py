@@ -12,6 +12,7 @@ from typing import Callable, Optional
 import tkinter as tk
 from tkinter import ttk
 
+from .. import i18n
 from ..domain import ANGLE_MAX, ANGLE_MIN, ANGLE_RESOLUTION, clamp_angle
 
 _COARSE_STEP = 1.0
@@ -28,7 +29,7 @@ class ManualAngleControl(ttk.Frame):
         self._on_change: Optional[Callable[[float], None]] = None
         self._suspend = False
 
-        ttk.Label(self, text="Manual angle (\u00b0):").pack(side="left")
+        ttk.Label(self, text=i18n.tr("label.manual_angle")).pack(side="left")
 
         self.entry_var = tk.StringVar(value="0.0")
         self.entry = ttk.Entry(self, textvariable=self.entry_var, width=8, justify="right")
@@ -49,7 +50,7 @@ class ManualAngleControl(ttk.Frame):
 
         ttk.Button(self, text="\u25b6", width=3,
                    command=lambda: self.nudge(_COARSE_STEP)).pack(side="left")
-        ttk.Button(self, text="Reset", width=7,
+        ttk.Button(self, text=i18n.tr("btn.reset"), width=7,
                    command=lambda: self._emit(0.0)).pack(side="left", padx=(8, 0))
 
     # -- port --------------------------------------------------------------- #

@@ -28,6 +28,7 @@ slab/
 smear_diag/
 # Per-run app/session state (not source)
 app_session.json
+app_settings.json
 app_runs.jsonl
 labeler_session.json
 projview_state.json

@@ -13,6 +13,23 @@ from geltilt.app.config import AppConfig
 from geltilt.app.domain import EstimateOutcome, LaneLine
 
 
+@pytest.fixture(autouse=True)
+def _english_ui(monkeypatch):
+    """Pin the app UI to English so text assertions stay stable.
+
+    The shipped default is Simplified Chinese; production behaviour is covered
+    separately in ``test_i18n.py``.
+    """
+    from geltilt.app import config as app_config
+    from geltilt.app import i18n
+
+    monkeypatch.setattr(app_config, "load_language", lambda run_dir=None: "en")
+    previous = i18n.get_language()
+    i18n.set_language("en")
+    yield
+    i18n.set_language(previous)
+
+
 # --------------------------------------------------------------------------- #
 # Test doubles                                                                 #
 # --------------------------------------------------------------------------- #

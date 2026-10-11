@@ -11,6 +11,8 @@ from typing import Callable, List, Optional
 import tkinter as tk
 from tkinter import ttk
 
+from .. import i18n
+
 _PREV = "\u25c0"
 _NEXT = "\u25b6"
 
@@ -29,7 +31,7 @@ class SampleNav(ttk.Frame):
         self.prev_button.pack(side="left")
         self.next_button = ttk.Button(self, text=_NEXT, width=3, command=self._next)
         self.next_button.pack(side="left", padx=(4, 0))
-        self.name_label = ttk.Label(self, text="no image", anchor="w")
+        self.name_label = ttk.Label(self, text=i18n.tr("nav.no_image"), anchor="w")
         self.name_label.pack(side="left", fill="x", expand=True, padx=(12, 0))
         self._update_buttons()
 
@@ -43,12 +45,12 @@ class SampleNav(ttk.Frame):
         if self._names:
             self.name_label.config(text=self._names[0])
         else:
-            self.name_label.config(text="no image")
+            self.name_label.config(text=i18n.tr("nav.no_image"))
         self._update_buttons()
 
     def set_active(self, index: int) -> None:
         if not self._names:
-            self.name_label.config(text="no image")
+            self.name_label.config(text=i18n.tr("nav.no_image"))
             self._update_buttons()
             return
         index = max(0, min(int(index), len(self._names) - 1))
