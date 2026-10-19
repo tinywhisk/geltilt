@@ -8,7 +8,7 @@ GelTilt 读取凝胶成像仪拍摄的原始灰度图，用 GelGenie 分割条�
 
 ## 仓库说明
 
-本仓库为 GelTilt 的公开源码（与比赛提交包中的 `GelTilt/（本仓库根目录）` 目录一致，但去除了 `dist/` 预编译程序）。以下内容未纳入本仓库：
+本仓库为 GelTilt 的公开源码（与比赛提交包中的 `源码/` 目录一致，但去除了 `dist/` 预编译程序）。以下内容未纳入本仓库：
 
 - 开发过程目录 `.codeartsdoer/` 与 `build/` 构建缓存；
 - 比赛提交包内含**自包含单文件程序** `dist/geltilt-app.exe`（内置 GelGenie 模型与第三方许可证，约 130 MB）；本仓库不包含该二进制文件，可用 `python build_app_exe.py` 重新打包；
