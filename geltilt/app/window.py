@@ -14,7 +14,7 @@ from .about import show_about
 from .config import AppConfig
 from .fonts import apply_ui_fonts
 from .controller import AppController
-from .export import SAVE_FILETYPES
+from .export import OPEN_FILETYPES, SAVE_FILETYPES
 from .widgets.diagnostic_panel import DiagnosticPanel
 from .widgets.manual_angle import ManualAngleControl
 from .widgets.sample_nav import SampleNav
@@ -22,7 +22,7 @@ from .widgets.viewer import SingleViewer
 
 
 class AppWindow(tk.Tk):
-    """Single-window shell: file/folder bar, Rotation, Crop, one viewer,
+    """Single-window shell: file bar, Rotation, Crop, one viewer,
     Export, and a bottom bar holding overlays, diagnostics and status."""
 
     def __init__(
@@ -63,10 +63,7 @@ class AppWindow(tk.Tk):
         top = ttk.Frame(self, padding=(8, 6))
         top.pack(side="top", fill="x")
         ttk.Button(top, text=i18n.tr("btn.load_image"), width=13,
-                   command=self._noop).pack(side="left")
-        ttk.Button(top, text=i18n.tr("btn.load_folder"), width=13, command=self._choose_folder).pack(
-            side="left", padx=(6, 0)
-        )
+                   command=self._choose_image).pack(side="left")
         # Arrows + current filename, absorbing the leftover width.
         self.nav = SampleNav(top, ui_scale=scale)
         self.nav.pack(side="left", fill="x", expand=True, padx=(12, 0))
@@ -212,9 +209,6 @@ class AppWindow(tk.Tk):
     def _about(self) -> None:
         show_about(self, self.app_config.ui_scale)
 
-    def _noop(self, *_args, **_kwargs) -> None:
-        """Placeholder for buttons whose feature is not implemented yet."""
-        return None
 
     def _on_language_selected(self, _event=None) -> None:
         """Persist the choice; the new language applies after a restart."""
@@ -228,16 +222,27 @@ class AppWindow(tk.Tk):
             parent=self,
         )
 
-    def _choose_folder(self) -> None:
+    def _choose_image(self) -> None:
+        """Pick one image; its folder becomes the scanned directory, and it is shown."""
         start = self.controller.folder
         if start is None:
             candidate = self.app_config.run_dir / "samples"
             start = candidate if candidate.is_dir() else self.app_config.run_dir
-        chosen = filedialog.askdirectory(initialdir=str(start),
-                                         title=i18n.tr("fd.select_image_folder"))
-        if chosen:
-            self.controller.open_folder(Path(chosen))
-            self._update_folder_label()
+        chosen = filedialog.askopenfilename(initialdir=str(start),
+                                            title=i18n.tr("fd.select_image"),
+                                            filetypes=OPEN_FILETYPES)
+        if not chosen:
+            return
+        path = Path(chosen)
+        self.controller.open_folder(path.parent)
+        self._update_folder_label()
+        self._select_sample(path)
+
+    def _select_sample(self, path: Path) -> None:
+        """Make ``path`` the active sample (it belongs to the scanned folder)."""
+        names = [p.name for p in self.controller.samples]
+        if path.name in names:
+            self.controller.goto(names.index(path.name))
 
     def _update_folder_label(self) -> None:
         folder = self.controller.folder
@@ -353,7 +358,7 @@ class AppWindow(tk.Tk):
         return isinstance(widget, (tk.Entry, tk.Text, ttk.Entry, ttk.Spinbox))
 
     def _bind_keys(self) -> None:
-        self.bind("<Control-o>", lambda e: self._choose_folder())
+        self.bind("<Control-o>", lambda e: self._choose_image())
         self.bind("<Control-s>", lambda e: self._save_as())
         self.bind("<Control-S>", lambda e: self._save_as())
         self.bind("<Control-c>", lambda e: None if self._text_focus() else self._copy_to_clipboard())

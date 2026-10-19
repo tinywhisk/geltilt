@@ -1,0 +1,15 @@
+GelGenie ONNX band-segmentation weights
+=======================================
+
+Upstream project : https://github.com/mattaq/GelGenie
+Weights source   : https://huggingface.co/mattaq/GelGenie-Universal-Dec-2023
+Original file    : onnx_checkpoints/unet_dec_21_epoch_579_fixed_dim_1024.onnx
+Bundled file     : gelgenie_universal_1024.onnx (57,288,390 bytes)
+SHA-256          : 56e335e59e8580adf9401b6a99744d11cfcae25462e4059a807e84981100ed29
+License          : Apache-2.0 (full text: licenses/gelgenie-LICENSE.txt)
+
+The weights are redistributed unmodified. They are not trained or modified by
+this project and are included only for offline band segmentation inference.
+
+Reference: Aquilina et al., "GelGenie: an AI-powered framework for gel
+electrophoresis image analysis", Nature Communications 16, 4087 (2025).

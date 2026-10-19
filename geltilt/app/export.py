@@ -30,6 +30,16 @@ SAVE_FILETYPES = [
     ("All files", "*.*"),
 ]
 
+# Open-dialog format list; the first entry mirrors the supported input types.
+OPEN_FILETYPES = [
+    ("Image files", "*.tif *.tiff *.png *.jpg *.jpeg *.bmp"),
+    ("TIFF image", "*.tif *.tiff"),
+    ("PNG image", "*.png"),
+    ("JPEG image", "*.jpg *.jpeg"),
+    ("BMP image", "*.bmp"),
+    ("All files", "*.*"),
+]
+
 # extension -> (preserves the source bit depth?)
 _PRESERVES_DEPTH: Dict[str, bool] = {
     ".tif": True, ".tiff": True, ".png": True,

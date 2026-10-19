@@ -197,6 +197,7 @@ _STRINGS: Dict[str, Dict[str, str]] = {
                            "zh": "\u65e0\u6cd5\u590d\u5236\uff1a\n{exc}"},
 
     # -- file dialogs ------------------------------------------------------
+    "fd.select_image": {"en": "Select an image", "zh": "\u9009\u62e9\u56fe\u50cf"},
     "fd.select_image_folder": {"en": "Select image folder", "zh": "\u9009\u62e9\u56fe\u50cf\u6587\u4ef6\u5939"},
     "fd.save_corrected": {"en": "Save corrected image", "zh": "\u4fdd\u5b58\u6821\u6b63\u540e\u7684\u56fe\u50cf"},
 

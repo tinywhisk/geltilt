@@ -46,20 +46,31 @@ def _buttons(window):
 def test_reference_layout_buttons_are_present(window):
     texts = set(_buttons(window))
     assert {
-        "Load image...", "Load folder...", "Auto rotate", "Reset",
+        "Load image...", "Auto rotate", "Reset",
         "Auto crop", "Clear crop", "Even widths", "Save as...", "Copy to clipboard",
     } <= texts
+    assert "Load folder..." not in texts        # replaced by "Load image..."
 
 
-def test_unimplemented_buttons_are_enabled_noops(window):
-    inert = ["Load image..."]
-    before = list(window.controller.samples)
-    buttons = _buttons(window)
-    for text in inert:
-        button = buttons[text]
-        assert str(button.cget("state")) != "disabled"
-        button.invoke()  # no-op: must not raise or change state
-    assert list(window.controller.samples) == before
+def test_load_image_scans_the_picked_images_folder(window, sample_folder, monkeypatch):
+    import geltilt.app.window as window_mod
+
+    picked = sample_folder / "b_gel.png"
+    monkeypatch.setattr(window_mod.filedialog, "askopenfilename", lambda **k: str(picked))
+
+    window._choose_image()
+
+    assert window.controller.folder == sample_folder          # folder of the pick is scanned
+    assert len(window.controller.samples) == 3                # every image in it
+    assert window.controller.active_sample().name == "b_gel.png"  # and the pick is shown
+
+
+def test_load_image_cancelled_leaves_state_untouched(window, monkeypatch):
+    import geltilt.app.window as window_mod
+
+    monkeypatch.setattr(window_mod.filedialog, "askopenfilename", lambda **k: "")
+    window._choose_image()
+    assert window.controller.folder is None
 
 
 def test_crop_buttons_disabled_until_auto_rotate(window):

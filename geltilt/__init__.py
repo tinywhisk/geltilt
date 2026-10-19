@@ -1,10 +1,10 @@
 """geltilt - automatic rotation correction for gel electrophoresis images.
 
-The core idea: lanes and their band smears form vertical structures. When a gel
-image is tilted, the vertical projection (column sums) of the band signal is
-smeared; when the lanes are vertical that projection is maximally sharp. We scan
-candidate rotation angles and pick the one that maximises the sharpness of this
-projection, which straightens the lanes.
+The core idea: GelGenie band segmentation produces band centroids; centroids are
+clustered into lanes, each lane is fitted with a straight line, and the per-lane
+angles are pooled by inverse variance into one robust image tilt. Rotating by the
+negative of that angle makes the lanes vertical. The same lane model is the only
+rotation estimator used by the CLI and the desktop app.
 """
 
 from .core import RotationEstimate, auto_correct, correct_rotation, estimate_rotation
@@ -20,4 +20,4 @@ __all__ = [
     "save_array",
 ]
 
-__version__ = "0.1.0"
+__version__ = "1.2.0"

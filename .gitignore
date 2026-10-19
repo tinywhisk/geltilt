@@ -15,43 +15,26 @@ venv/
 .idea/
 .vscode/
 
+# Model weights (large; bundled in the release exe / fetched at runtime)
+*.onnx
+
 # Generated comparison figures (regenerate via the CLI)
 comparison.png
 preprocess_comparison.png
 pipeline.png
 
-# Batch / generated outputs
-rot_output/
-discrepencies/
+# Benchmark images (keep the JSON summaries)
+rot_output/*.png
+discrepencies/*.png
 flatten_ridge/
 slab/
 smear_diag/
-# Per-run app/session state (not source)
-app_session.json
-app_settings.json
-app_runs.jsonl
-labeler_session.json
-projview_state.json
-sample_labels.json
-
-# Local diagnostics / scratch build dirs
 band_mask_diag/
 _measure/
 
-# ML model weights — large, fetched at build/run time, never versioned
-*.onnx
-# Not published to the repo (kept locally only) — design/spec docs + the older
-# labeler and projview standalone tools. NOTE: geltilt/labeler.py is app-core
-# and MUST stay tracked; only the standalone entries are excluded here.
-/SPEC-AUTOROTATE.md
-/SPEC-COMPOSITE.md
-/BAND_DETECTION.md
-/improved-rotation-alg/
-/run_labeler.py
-/run_projview.py
-/geltilt-label.spec
-/geltilt-projview.spec
-/geltilt/projview.py
-/tests/test_projview.py
-/ui_layout_reference.py
-/timeline.md
+# Per-run app/session state (app_runs.jsonl is the committed run log)
+app_session.json
+app_settings.json
+labeler_session.json
+projview_state.json
+sample_labels.json

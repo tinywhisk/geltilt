@@ -1,0 +1,1729 @@
+[
+  {
+    "input": "samples\\20206417 55130-G.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.603,
+    "angle_reported": -0.603,
+    "se": 0.4859598527431589,
+    "reason": "no lane with >=4 rungs; used 2-rung column(s) (weak)",
+    "warnings": [
+      "2-rung fallback: no lane with >=4 rungs in this image; a 2-rung column is a short lever arm (angle se ~0.49 deg, 10 rungs, 185 px span)"
+    ],
+    "kept": 4,
+    "n_ladders": 4,
+    "n_bands": 16,
+    "fallback": true,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20206417 55130-G_compare.png"
+  },
+  {
+    "input": "samples\\20230402 36160 cds fag-dna 42 65 55130-1 55130-2 gfp.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.285,
+    "angle_reported": -0.285,
+    "se": 0.5446179475684735,
+    "reason": "ok: 2 lane(s) pooled of 2, 12 rungs, se 0.54 deg",
+    "warnings": [
+      "lanes disagree 3.7x more than their own errors predict (Q/dof 3.7): the pooled se already carries this inflation"
+    ],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 25,
+    "fallback": false,
+    "overdispersion": 3.686294786198774,
+    "compare": "rot_output\\20230402 36160 cds fag-dna 42 65 55130-1 55130-2 gfp_compare.png"
+  },
+  {
+    "input": "samples\\20240410 XP11 55130-2 PARTIAL  ATPAD6-1.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 2.096,
+    "angle_reported": 2.096,
+    "se": 0.6948019059156737,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.69 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.69 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 13,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20240410 XP11 55130-2 PARTIAL  ATPAD6-1_compare.png"
+  },
+  {
+    "input": "samples\\2026 0508 PPA6-1 PPA6-2 13772.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -2.942,
+    "angle_reported": -2.942,
+    "se": 0.9174822138643886,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.92 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.92 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 13,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\2026 0508 PPA6-1 PPA6-2 13772_compare.png"
+  },
+  {
+    "input": "samples\\2026-519 \u80e1\u6912rna2 f1r2 f2r1 rna1f2r2.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 3.161,
+    "angle_reported": 3.161,
+    "se": 1.8985391271516314,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 1.90 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 1.90 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 13,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\2026-519 \u80e1\u6912rna2 f1r2 f2r1 rna1f2r2_compare.png"
+  },
+  {
+    "input": "samples\\20260403 3030 1450 825 RNA.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.367,
+    "angle_reported": -0.367,
+    "se": 0.3843389458760518,
+    "reason": "lanes disagree by more than 1.5 deg about the median -0.313; used the 7 agreeing one(s)",
+    "warnings": [
+      "lane 3: line R2 0.73 < 0.90 (4 rungs, 0.5 px of lean, angle +-0.78 deg)",
+      "lane 5: line R2 0.81 < 0.90 (4 rungs, 0.7 px of lean, angle +-0.83 deg)",
+      "lanes disagree 2.1x more than their own errors predict (Q/dof 2.1): the pooled se already carries this inflation"
+    ],
+    "kept": 7,
+    "n_ladders": 8,
+    "n_bands": 116,
+    "fallback": false,
+    "overdispersion": 2.087306616304714,
+    "compare": "rot_output\\20260403 3030 1450 825 RNA_compare.png"
+  },
+  {
+    "input": "samples\\20260403 35160 cds+gfp 55130+55130-2 55130-1.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 1.266,
+    "angle_reported": 1.266,
+    "se": 0.8001722766849564,
+    "reason": "lanes disagree by more than 1.5 deg about the median 1.547; used the 3 agreeing one(s)",
+    "warnings": [
+      "lane 1: line R2 0.84 < 0.90 (4 rungs, 0.8 px of lean, angle +-1.54 deg)",
+      "lane 2: line R2 0.89 < 0.90 (4 rungs, 1.6 px of lean, angle +-2.53 deg)",
+      "longest lane spans only 69 px (< 70): short lever arm"
+    ],
+    "kept": 3,
+    "n_ladders": 4,
+    "n_bands": 23,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260403 35160 cds+gfp 55130+55130-2 55130-1_compare.png"
+  },
+  {
+    "input": "samples\\20260403 35160.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.606,
+    "angle_reported": 0.606,
+    "se": 0.39965115834563436,
+    "reason": "ok: 4 lane(s) pooled of 4, 26 rungs, se 0.40 deg",
+    "warnings": [
+      "lane 2: line R2 0.60 < 0.90 (7 rungs, 1.3 px of lean, angle +-1.27 deg)",
+      "lane 3: line R2 0.61 < 0.90 (5 rungs, 6.0 px of lean, angle +-1.42 deg)"
+    ],
+    "kept": 4,
+    "n_ladders": 4,
+    "n_bands": 65,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260403 35160_compare.png"
+  },
+  {
+    "input": "samples\\20260403 MU55130.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -2.698,
+    "angle_reported": -2.698,
+    "se": 0.5017371579576564,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.50 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.50 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 23,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260403 MU55130_compare.png"
+  },
+  {
+    "input": "samples\\20260407 13772-1 13772-2 MU13772  BGLII.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -3.098,
+    "angle_reported": -3.098,
+    "se": 0.5428930018308262,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.54 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.54 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 15,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260407 13772-1 13772-2 MU13772  BGLII_compare.png"
+  },
+  {
+    "input": "samples\\20260407 35160.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -1.363,
+    "angle_reported": -1.363,
+    "se": 0.5571684951589462,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.56 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.56 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 30,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260407 35160_compare.png"
+  },
+  {
+    "input": "samples\\20260409 13772MU 35160-5941.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 3.913,
+    "angle_reported": 3.913,
+    "se": 1.0694043180875348,
+    "reason": "ok: 1 lane(s) pooled of 1, 4 rungs, se 1.07 deg",
+    "warnings": [
+      "longest lane spans only 65 px (< 70): short lever arm",
+      "single lane: no independent consensus, the answer is that lane alone (se 1.07 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 21,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260409 13772MU 35160-5941_compare.png"
+  },
+  {
+    "input": "samples\\20260409 55130 MU-1.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -2.981,
+    "angle_reported": -2.981,
+    "se": 0.8438713470142241,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.84 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.84 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 13,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260409 55130 MU-1_compare.png"
+  },
+  {
+    "input": "samples\\20260409 MU13772.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 1.271,
+    "angle_reported": 1.271,
+    "se": 1.5421935643557232,
+    "reason": "ok: 1 lane(s) pooled of 1, 4 rungs, se 1.54 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 1.54 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 46,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260409 MU13772_compare.png"
+  },
+  {
+    "input": "samples\\20260409 PKSE-FAGAD.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -2.245,
+    "angle_reported": -2.245,
+    "se": 0.9691997688516347,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.97 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.97 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 10,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260409 PKSE-FAGAD_compare.png"
+  },
+  {
+    "input": "samples\\20260413 PKSE-FAGAD-C XP11-1 5941-ATPAD6 MU55130 MU13772.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -2.262,
+    "angle_reported": -2.262,
+    "se": 0.5783642519904477,
+    "reason": "ok: 2 lane(s) pooled of 2, 14 rungs, se 0.58 deg",
+    "warnings": [],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 56,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260413 PKSE-FAGAD-C XP11-1 5941-ATPAD6 MU55130 MU13772_compare.png"
+  },
+  {
+    "input": "samples\\20260414 ATPAD-6.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.018,
+    "angle_reported": -0.018,
+    "se": 0.8846481581692712,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.88 deg",
+    "warnings": [
+      "lane 0: line R2 0.00 < 0.90 (7 rungs, 0.4 px of lean, angle +-0.88 deg)",
+      "single lane: no independent consensus, the answer is that lane alone (se 0.88 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 12,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260414 ATPAD-6_compare.png"
+  },
+  {
+    "input": "samples\\20260414 XP11.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.278,
+    "angle_reported": 0.278,
+    "se": 1.1227737977586856,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 1.12 deg",
+    "warnings": [
+      "lane 0: line R2 0.34 < 0.90 (7 rungs, 0.7 px of lean, angle +-1.12 deg)",
+      "single lane: no independent consensus, the answer is that lane alone (se 1.12 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 10,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260414 XP11_compare.png"
+  },
+  {
+    "input": "samples\\20260414AD6-1.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.577,
+    "angle_reported": 0.577,
+    "se": 0.8465600661658843,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.85 deg",
+    "warnings": [
+      "lane 0: line R2 0.84 < 0.90 (7 rungs, 0.9 px of lean, angle +-0.85 deg)",
+      "single lane: no independent consensus, the answer is that lane alone (se 0.85 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 37,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260414AD6-1_compare.png"
+  },
+  {
+    "input": "samples\\20260416 121-35160.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 2.196,
+    "angle_reported": 2.196,
+    "se": 1.2355158937208488,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 1.24 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 1.24 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 21,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260416 121-35160_compare.png"
+  },
+  {
+    "input": "samples\\20260416 65-1 42-1 13772.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 3.338,
+    "angle_reported": 3.338,
+    "se": 1.0539301532706424,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 1.05 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 1.05 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 16,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260416 65-1 42-1 13772_compare.png"
+  },
+  {
+    "input": "samples\\20260416 ATPAD.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 1.476,
+    "angle_reported": 1.476,
+    "se": 1.4240326433648733,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 1.42 deg",
+    "warnings": [
+      "lane 0: line R2 0.88 < 0.90 (7 rungs, 3.1 px of lean, angle +-1.42 deg)",
+      "single lane: no independent consensus, the answer is that lane alone (se 1.42 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 9,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260416 ATPAD_compare.png"
+  },
+  {
+    "input": "samples\\20260417 65-1 42-1 XP11-2  ATPAD6-1.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.373,
+    "angle_reported": -0.373,
+    "se": 0.6855655842101175,
+    "reason": "ok: 2 lane(s) pooled of 2, 13 rungs, se 0.69 deg",
+    "warnings": [
+      "lane 0: line R2 0.68 < 0.90 (7 rungs, 0.7 px of lean, angle +-0.75 deg)",
+      "lane 1: line R2 0.38 < 0.90 (6 rungs, 0.9 px of lean, angle +-1.73 deg)"
+    ],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 53,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260417 65-1 42-1 XP11-2  ATPAD6-1_compare.png"
+  },
+  {
+    "input": "samples\\20260420 55130-G 35160-121.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.619,
+    "angle_reported": -0.619,
+    "se": 0.717577264252865,
+    "reason": "ok: 3 lane(s) pooled of 3, 12 rungs, se 0.72 deg",
+    "warnings": [
+      "lane 0: line R2 0.32 < 0.90 (4 rungs, 0.6 px of lean, angle +-1.00 deg)",
+      "lane 2: line R2 0.77 < 0.90 (4 rungs, 2.0 px of lean, angle +-1.90 deg)"
+    ],
+    "kept": 3,
+    "n_ladders": 3,
+    "n_bands": 31,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260420 55130-G 35160-121_compare.png"
+  },
+  {
+    "input": "samples\\20260420 55140-G ATLUCK 121-35160 MU13772.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.957,
+    "angle_reported": 0.957,
+    "se": 0.6151612558448762,
+    "reason": "ok: 2 lane(s) pooled of 2, 12 rungs, se 0.62 deg",
+    "warnings": [],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 55,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260420 55140-G ATLUCK 121-35160 MU13772_compare.png"
+  },
+  {
+    "input": "samples\\20260420 caAAP6 55130-2 55130-2 13772-1 13772-2.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 3.026,
+    "angle_reported": 3.026,
+    "se": 2.634150750935209,
+    "reason": "ok: 1 lane(s) pooled of 1, 6 rungs, se 2.63 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 2.63 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 11,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260420 caAAP6 55130-2 55130-2 13772-1 13772-2_compare.png"
+  },
+  {
+    "input": "samples\\20260421 131-YFP-PPA6 55130-GDNA.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -2.028,
+    "angle_reported": -2.028,
+    "se": 0.6558033218515823,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.66 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.66 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 26,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260421 131-YFP-PPA6 55130-GDNA_compare.png"
+  },
+  {
+    "input": "samples\\20260421 65-2 42-2 11-2 PPA6-2.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 2.897,
+    "angle_reported": 2.897,
+    "se": 0.7165545667958556,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.72 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.72 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 13,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260421 65-2 42-2 11-2 PPA6-2_compare.png"
+  },
+  {
+    "input": "samples\\20260422 42-2 65-2 11-2 ppad6-2 AAP6-YFP.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 2.339,
+    "angle_reported": 2.339,
+    "se": 0.7214207627007463,
+    "reason": "ok: 2 lane(s) pooled of 3, 12 rungs, se 0.72 deg",
+    "warnings": [],
+    "kept": 2,
+    "n_ladders": 3,
+    "n_bands": 60,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260422 42-2 65-2 11-2 ppad6-2 AAP6-YFP_compare.png"
+  },
+  {
+    "input": "samples\\20260422 ATLUCKY CAAP6.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 2.165,
+    "angle_reported": 2.165,
+    "se": 0.5527961204226404,
+    "reason": "ok: 3 lane(s) pooled of 3, 17 rungs, se 0.55 deg",
+    "warnings": [],
+    "kept": 3,
+    "n_ladders": 3,
+    "n_bands": 63,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260422 ATLUCKY CAAP6_compare.png"
+  },
+  {
+    "input": "samples\\20260422 XP11-1 XP11-COLONY.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 3.602,
+    "angle_reported": 3.602,
+    "se": 6.092188564534167,
+    "reason": "ok: 1 lane(s) pooled of 1, 4 rungs, se 6.09 deg",
+    "warnings": [
+      "lane 0: line R2 0.85 < 0.90 (4 rungs, 2.8 px of lean, angle +-6.09 deg)",
+      "longest lane spans only 56 px (< 70): short lever arm",
+      "single lane: no independent consensus, the answer is that lane alone (se 6.09 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 10,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260422 XP11-1 XP11-COLONY_compare.png"
+  },
+  {
+    "input": "samples\\20260423 131-CAAAP6-YFP 1300-ATLUCKY.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 2.541,
+    "angle_reported": 2.541,
+    "se": 0.3615141325144844,
+    "reason": "ok: 2 lane(s) pooled of 2, 14 rungs, se 0.36 deg",
+    "warnings": [],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 46,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260423 131-CAAAP6-YFP 1300-ATLUCKY_compare.png"
+  },
+  {
+    "input": "samples\\20260423 131-CAAAP6-YFP.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 2.541,
+    "angle_reported": 2.541,
+    "se": 0.3615141325144844,
+    "reason": "ok: 2 lane(s) pooled of 2, 14 rungs, se 0.36 deg",
+    "warnings": [],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 46,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260423 131-CAAAP6-YFP_compare.png"
+  },
+  {
+    "input": "samples\\20260423 65-1 65-2.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -2.496,
+    "angle_reported": -2.496,
+    "se": 2.13936968969917,
+    "reason": "ok: 1 lane(s) pooled of 1, 5 rungs, se 2.14 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 2.14 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 8,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260423 65-1 65-2_compare.png"
+  },
+  {
+    "input": "samples\\20260424 11-1 11-2 65-1 65-2 55130-G.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.342,
+    "angle_reported": 0.342,
+    "se": 0.2469391329483624,
+    "reason": "ok: 4 lane(s) pooled of 4, 22 rungs, se 0.25 deg",
+    "warnings": [
+      "lane 2: line R2 0.89 < 0.90 (7 rungs, 1.4 px of lean, angle +-0.79 deg)",
+      "lane 3: line R2 0.71 < 0.90 (7 rungs, 1.0 px of lean, angle +-0.95 deg)"
+    ],
+    "kept": 4,
+    "n_ladders": 4,
+    "n_bands": 47,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260424 11-1 11-2 65-1 65-2 55130-G_compare.png"
+  },
+  {
+    "input": "samples\\20260424 131-AAPA6-YFP 65RNAI 5941-ATPPA6-1.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.088,
+    "angle_reported": 0.088,
+    "se": 0.8955320913638491,
+    "reason": "ok: 2 lane(s) pooled of 2, 12 rungs, se 0.90 deg",
+    "warnings": [
+      "lane 0: line R2 0.44 < 0.90 (6 rungs, 0.6 px of lean, angle +-1.24 deg)",
+      "lane 1: line R2 0.21 < 0.90 (6 rungs, 0.5 px of lean, angle +-1.29 deg)"
+    ],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 56,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260424 131-AAPA6-YFP 65RNAI 5941-ATPPA6-1_compare.png"
+  },
+  {
+    "input": "samples\\20260424 42-1 42-2  MU13772.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.312,
+    "angle_reported": -0.312,
+    "se": 1.3276086391006772,
+    "reason": "ok: 1 lane(s) pooled of 1, 5 rungs, se 1.33 deg",
+    "warnings": [
+      "lane 0: line R2 0.43 < 0.90 (5 rungs, 0.6 px of lean, angle +-1.33 deg)",
+      "single lane: no independent consensus, the answer is that lane alone (se 1.33 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 29,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260424 42-1 42-2  MU13772_compare.png"
+  },
+  {
+    "input": "samples\\20260427 65-1 65-2 11-1 11-2 \u6d4b\u5e8f.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -1.568,
+    "angle_reported": -1.568,
+    "se": 0.9158288145221263,
+    "reason": "ok: 1 lane(s) pooled of 1, 4 rungs, se 0.92 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.92 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 11,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260427 65-1 65-2 11-1 11-2 \u6d4b\u5e8f_compare.png"
+  },
+  {
+    "input": "samples\\20260427 aap6  ppa6-2.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.116,
+    "angle_reported": 0.116,
+    "se": 0.3763137620969409,
+    "reason": "ok: 2 lane(s) pooled of 2, 14 rungs, se 0.38 deg",
+    "warnings": [
+      "lane 1: line R2 0.27 < 0.90 (7 rungs, 0.8 px of lean, angle +-0.72 deg)"
+    ],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 28,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260427 aap6  ppa6-2_compare.png"
+  },
+  {
+    "input": "samples\\20260428 15810 990 \u9175\u6bcd\u819c\u86cb\u767d\u8d28\u7c92.Tif",
+    "engine": "ladders",
+    "ok": false,
+    "angle": 0.0,
+    "angle_reported": null,
+    "se": NaN,
+    "reason": "no lane-like rung column found",
+    "warnings": [],
+    "kept": null,
+    "n_ladders": 0,
+    "n_bands": 15,
+    "fallback": null,
+    "overdispersion": null,
+    "compare": "rot_output\\20260428 15810 990 \u9175\u6bcd\u819c\u86cb\u767d\u8d28\u7c92_compare.png"
+  },
+  {
+    "input": "samples\\20260428 25110 402 rna.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.217,
+    "angle_reported": -0.217,
+    "se": 0.36681535514670927,
+    "reason": "no lane with >=4 rungs; used 2-rung column(s) (weak)",
+    "warnings": [
+      "2-rung fallback: no lane with >=4 rungs in this image; a 2-rung column is a short lever arm (angle se ~0.37 deg, 24 rungs, 81 px span)",
+      "lane 2: line R2 0.88 < 0.90 (3 rungs, 0.3 px of lean, angle +-0.96 deg)",
+      "lane 4: line R2 0.42 < 0.90 (3 rungs, 0.2 px of lean, angle +-1.26 deg)",
+      "lane 5: line R2 0.67 < 0.90 (3 rungs, 0.3 px of lean, angle +-1.28 deg)",
+      "lane 6: line R2 0.88 < 0.90 (3 rungs, 0.6 px of lean, angle +-1.31 deg)",
+      "lane 7: line R2 0.56 < 0.90 (3 rungs, 0.2 px of lean, angle +-1.20 deg)"
+    ],
+    "kept": 8,
+    "n_ladders": 8,
+    "n_bands": 67,
+    "fallback": true,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260428 25110 402 rna_compare.png"
+  },
+  {
+    "input": "samples\\20260428 42rnai.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 1.266,
+    "angle_reported": 1.266,
+    "se": 0.4565079804382448,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.46 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.46 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 31,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260428 42rnai_compare.png"
+  },
+  {
+    "input": "samples\\20260429 3.1 nhx.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 4.399,
+    "angle_reported": 4.399,
+    "se": 0.6615423194389966,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.66 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.66 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 10,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260429 3.1 nhx_compare.png"
+  },
+  {
+    "input": "samples\\20260429 990 13772-1 13772-2 55130-1 55130-2.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.026,
+    "angle_reported": -0.026,
+    "se": 0.4833206685131171,
+    "reason": "ok: 3 lane(s) pooled of 3, 21 rungs, se 0.48 deg",
+    "warnings": [
+      "lane 0: line R2 0.06 < 0.90 (7 rungs, 0.5 px of lean, angle +-0.67 deg)",
+      "lane 1: line R2 0.85 < 0.90 (7 rungs, 1.9 px of lean, angle +-0.91 deg)",
+      "lane 2: line R2 0.81 < 0.90 (7 rungs, 2.0 px of lean, angle +-1.07 deg)"
+    ],
+    "kept": 3,
+    "n_ladders": 3,
+    "n_bands": 61,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260429 990 13772-1 13772-2 55130-1 55130-2_compare.png"
+  },
+  {
+    "input": "samples\\20260430 42-1 65-1 11-1 42-2.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.183,
+    "angle_reported": 0.183,
+    "se": 0.5047266641473365,
+    "reason": "no lane with >=4 rungs; used 2-rung column(s) (weak)",
+    "warnings": [
+      "2-rung fallback: no lane with >=4 rungs in this image; a 2-rung column is a short lever arm (angle se ~0.50 deg, 6 rungs, 71 px span)"
+    ],
+    "kept": 3,
+    "n_ladders": 3,
+    "n_bands": 9,
+    "fallback": true,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260430 42-1 65-1 11-1 42-2_compare.png"
+  },
+  {
+    "input": "samples\\20260430 990-CE 990-NE 3,1-CE 3.1-NE XHX-VE NHX-CE.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.332,
+    "angle_reported": 0.332,
+    "se": 0.5085583933749912,
+    "reason": "lanes disagree by more than 1.5 deg about the median 0.353; used the 7 agreeing one(s)",
+    "warnings": [
+      "lane 0: line R2 0.62 < 0.90 (4 rungs, 2.3 px of lean, angle +-0.93 deg)",
+      "lane 1: line R2 0.55 < 0.90 (4 rungs, 3.7 px of lean, angle +-1.53 deg)",
+      "lane 2: line R2 0.01 < 0.90 (4 rungs, 2.8 px of lean, angle +-2.36 deg)",
+      "lane 3: line R2 0.09 < 0.90 (7 rungs, 0.5 px of lean, angle +-1.16 deg)",
+      "lane 4: line R2 0.57 < 0.90 (6 rungs, 1.2 px of lean, angle +-2.49 deg)",
+      "lane 5: line R2 0.70 < 0.90 (6 rungs, 4.1 px of lean, angle +-0.98 deg)",
+      "lane 6: line R2 0.00 < 0.90 (4 rungs, 2.1 px of lean, angle +-2.45 deg)"
+    ],
+    "kept": 7,
+    "n_ladders": 8,
+    "n_bands": 71,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260430 990-CE 990-NE 3,1-CE 3.1-NE XHX-VE NHX-CE_compare.png"
+  },
+  {
+    "input": "samples\\20260506 35160 AAP6 PPA6-1 990-BIFC 990-PBT.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -2.181,
+    "angle_reported": -2.181,
+    "se": 0.5723234003770933,
+    "reason": "ok: 2 lane(s) pooled of 2, 11 rungs, se 0.57 deg",
+    "warnings": [],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 18,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260506 35160 AAP6 PPA6-1 990-BIFC 990-PBT_compare.png"
+  },
+  {
+    "input": "samples\\20260506 NHX-N.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -1.799,
+    "angle_reported": -1.799,
+    "se": 0.2974917278552198,
+    "reason": "ok: 2 lane(s) pooled of 2, 10 rungs, se 0.30 deg",
+    "warnings": [],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 40,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260506 NHX-N_compare.png"
+  },
+  {
+    "input": "samples\\20260507 990-CE 990-NE 121-35160.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 1.583,
+    "angle_reported": 1.583,
+    "se": 0.4660677283964429,
+    "reason": "lanes disagree by more than 1.5 deg about the median 1.610; used the 6 agreeing one(s)",
+    "warnings": [],
+    "kept": 4,
+    "n_ladders": 7,
+    "n_bands": 100,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260507 990-CE 990-NE 121-35160_compare.png"
+  },
+  {
+    "input": "samples\\20260507 CE-1 CE-2 NE-1 NE-2 35160.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.428,
+    "angle_reported": 0.428,
+    "se": 0.8106074831572292,
+    "reason": "ok: 1 lane(s) pooled of 1, 4 rungs, se 0.81 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.81 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 8,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260507 CE-1 CE-2 NE-1 NE-2 35160_compare.png"
+  },
+  {
+    "input": "samples\\20260508 990-CE 990-NE NHX-CE NHX-NE 55130P G1 S2 ABC110 55130-CDS.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.045,
+    "angle_reported": -0.045,
+    "se": 0.6796037178780729,
+    "reason": "ok: 2 lane(s) pooled of 2, 14 rungs, se 0.68 deg",
+    "warnings": [
+      "lane 0: line R2 0.07 < 0.90 (7 rungs, 0.5 px of lean, angle +-0.73 deg)",
+      "lane 1: line R2 0.00 < 0.90 (7 rungs, 1.5 px of lean, angle +-1.84 deg)"
+    ],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 31,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260508 990-CE 990-NE NHX-CE NHX-NE 55130P G1 S2 ABC110 55130-CDS_compare.png"
+  },
+  {
+    "input": "samples\\20260508 PPA6-1 BX.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.96,
+    "angle_reported": -0.96,
+    "se": 2.3373111789680587,
+    "reason": "no lane with >=4 rungs; used 2-rung column(s) (weak)",
+    "warnings": [
+      "2-rung fallback: no lane with >=4 rungs in this image; a 2-rung column is a short lever arm (angle se ~2.34 deg, 3 rungs, 30 px span)",
+      "longest lane spans only 30 px (< 70): short lever arm"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 8,
+    "fallback": true,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260508 PPA6-1 BX_compare.png"
+  },
+  {
+    "input": "samples\\20260509 13772P.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -3.965,
+    "angle_reported": -3.965,
+    "se": 2.0286705197155825,
+    "reason": "ok: 1 lane(s) pooled of 1, 5 rungs, se 2.03 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 2.03 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 9,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260509 13772P_compare.png"
+  },
+  {
+    "input": "samples\\20260509 G1-NE.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.633,
+    "angle_reported": -0.633,
+    "se": 0.32337917520364307,
+    "reason": "lanes disagree by more than 1.5 deg about the median -0.508; used the 5 agreeing one(s)",
+    "warnings": [
+      "2-rung fallback: no lane with >=4 rungs in this image; a 2-rung column is a short lever arm (angle se ~0.32 deg, 11 rungs, 238 px span)",
+      "lane 4: line R2 0.80 < 0.90 (3 rungs, 3.4 px of lean, angle +-2.81 deg)",
+      "lanes disagree 4.8x more than their own errors predict (Q/dof 4.8): the pooled se already carries this inflation"
+    ],
+    "kept": 5,
+    "n_ladders": 6,
+    "n_bands": 37,
+    "fallback": true,
+    "overdispersion": 4.752671416491935,
+    "compare": "rot_output\\20260509 G1-NE_compare.png"
+  },
+  {
+    "input": "samples\\20260509 PPA6-1PPA6-2 AAP6 990.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -1.978,
+    "angle_reported": -1.978,
+    "se": 1.0401619677169367,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 1.04 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 1.04 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 16,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260509 PPA6-1PPA6-2 AAP6 990_compare.png"
+  },
+  {
+    "input": "samples\\20260511 131-YFP AAP6.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.085,
+    "angle_reported": -0.085,
+    "se": 0.7794173435025428,
+    "reason": "ok: 1 lane(s) pooled of 1, 4 rungs, se 0.78 deg",
+    "warnings": [
+      "lane 0: line R2 0.32 < 0.90 (4 rungs, 0.2 px of lean, angle +-0.78 deg)",
+      "single lane: no independent consensus, the answer is that lane alone (se 0.78 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 12,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260511 131-YFP AAP6_compare.png"
+  },
+  {
+    "input": "samples\\20260511 PFGC55130 3301-13772.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 1.2,
+    "angle_reported": 1.2,
+    "se": 0.3081028373937883,
+    "reason": "ok: 4 lane(s) pooled of 4, 22 rungs, se 0.31 deg",
+    "warnings": [],
+    "kept": 4,
+    "n_ladders": 4,
+    "n_bands": 80,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260511 PFGC55130 3301-13772_compare.png"
+  },
+  {
+    "input": "samples\\20260512 5941-ATPPA6-1 131-AAP6-YFP.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -1.449,
+    "angle_reported": -1.449,
+    "se": 2.110758271921942,
+    "reason": "lanes disagree by more than 1.5 deg about the median -1.570; used the 5 agreeing one(s)",
+    "warnings": [
+      "lane 0: line R2 0.78 < 0.90 (4 rungs, 8.5 px of lean, angle +-3.26 deg)",
+      "lane 1: line R2 0.79 < 0.90 (4 rungs, 9.2 px of lean, angle +-3.42 deg)",
+      "lane 2: line R2 0.64 < 0.90 (4 rungs, 7.8 px of lean, angle +-4.72 deg)"
+    ],
+    "kept": 3,
+    "n_ladders": 6,
+    "n_bands": 70,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260512 5941-ATPPA6-1 131-AAP6-YFP_compare.png"
+  },
+  {
+    "input": "samples\\20260512 SUPER1301-ABC11-NE.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.441,
+    "angle_reported": -0.441,
+    "se": 0.4386595849955844,
+    "reason": "ok: 7 lane(s) pooled of 8, 29 rungs, se 0.44 deg",
+    "warnings": [
+      "lane 0: line R2 0.55 < 0.90 (4 rungs, 2.2 px of lean, angle +-0.80 deg)",
+      "lane 1: line R2 0.28 < 0.90 (4 rungs, 4.8 px of lean, angle +-2.09 deg)",
+      "lane 2: line R2 0.34 < 0.90 (4 rungs, 3.7 px of lean, angle +-1.29 deg)",
+      "lane 3: line R2 0.61 < 0.90 (4 rungs, 3.9 px of lean, angle +-1.87 deg)",
+      "lane 4: line R2 0.76 < 0.90 (4 rungs, 5.1 px of lean, angle +-1.12 deg)",
+      "lane 5: line R2 0.80 < 0.90 (5 rungs, 8.3 px of lean, angle +-0.97 deg)",
+      "lane 6: line R2 0.78 < 0.90 (4 rungs, 5.8 px of lean, angle +-1.22 deg)"
+    ],
+    "kept": 7,
+    "n_ladders": 8,
+    "n_bands": 76,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260512 SUPER1301-ABC11-NE_compare.png"
+  },
+  {
+    "input": "samples\\20260512 \u80e1\u6912rna.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 1.015,
+    "angle_reported": 1.015,
+    "se": 1.9265546544561216,
+    "reason": "ok: 1 lane(s) pooled of 1, 4 rungs, se 1.93 deg",
+    "warnings": [
+      "lane 0: line R2 0.84 < 0.90 (4 rungs, 1.0 px of lean, angle +-1.93 deg)",
+      "single lane: no independent consensus, the answer is that lane alone (se 1.93 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 14,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260512 \u80e1\u6912rna_compare.png"
+  },
+  {
+    "input": "samples\\20260513 131-AAP6-YFP.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.245,
+    "angle_reported": -0.245,
+    "se": 0.38218893726698344,
+    "reason": "ok: 8 lane(s) pooled of 8, 38 rungs, se 0.38 deg",
+    "warnings": [
+      "lane 0: line R2 0.00 < 0.90 (4 rungs, 1.5 px of lean, angle +-2.37 deg)",
+      "lane 1: line R2 0.65 < 0.90 (4 rungs, 1.8 px of lean, angle +-2.13 deg)",
+      "lane 2: line R2 0.81 < 0.90 (7 rungs, 1.0 px of lean, angle +-1.01 deg)",
+      "lane 3: line R2 0.00 < 0.90 (4 rungs, 2.0 px of lean, angle +-3.26 deg)",
+      "lane 5: line R2 0.84 < 0.90 (5 rungs, 3.0 px of lean, angle +-1.51 deg)",
+      "lane 6: line R2 0.00 < 0.90 (5 rungs, 1.3 px of lean, angle +-1.70 deg)",
+      "lane 7: line R2 0.19 < 0.90 (5 rungs, 1.5 px of lean, angle +-1.71 deg)"
+    ],
+    "kept": 8,
+    "n_ladders": 8,
+    "n_bands": 76,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260513 131-AAP6-YFP_compare.png"
+  },
+  {
+    "input": "samples\\20260513 CR 990 35160 13772P.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.141,
+    "angle_reported": 0.141,
+    "se": 0.25976554275088126,
+    "reason": "lanes disagree by more than 1.5 deg about the median -0.309; used the 5 agreeing one(s)",
+    "warnings": [
+      "2-rung fallback: no lane with >=4 rungs in this image; a 2-rung column is a short lever arm (angle se ~0.26 deg, 11 rungs, 125 px span)",
+      "lane 4: line R2 0.40 < 0.90 (3 rungs, 0.4 px of lean, angle +-2.33 deg)"
+    ],
+    "kept": 5,
+    "n_ladders": 7,
+    "n_bands": 26,
+    "fallback": true,
+    "overdispersion": 1.0124749398237403,
+    "compare": "rot_output\\20260513 CR 990 35160 13772P_compare.png"
+  },
+  {
+    "input": "samples\\20260513 G1-CE S2-NE S2-CE ABC11-CE 131-APP6-YFP.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.417,
+    "angle_reported": 0.417,
+    "se": 0.2604383153543783,
+    "reason": "ok: 4 lane(s) pooled of 4, 22 rungs, se 0.26 deg",
+    "warnings": [
+      "lane 0: line R2 0.82 < 0.90 (4 rungs, 0.8 px of lean, angle +-0.29 deg)",
+      "lane 2: line R2 0.85 < 0.90 (7 rungs, 1.0 px of lean, angle +-0.85 deg)",
+      "lane 3: line R2 0.66 < 0.90 (4 rungs, 7.7 px of lean, angle +-3.29 deg)"
+    ],
+    "kept": 4,
+    "n_ladders": 4,
+    "n_bands": 77,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260513 G1-CE S2-NE S2-CE ABC11-CE 131-APP6-YFP_compare.png"
+  },
+  {
+    "input": "samples\\20260514 PPA6-2.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 1.753,
+    "angle_reported": 1.753,
+    "se": 0.6987765546860121,
+    "reason": "ok: 4 lane(s) pooled of 4, 20 rungs, se 0.70 deg",
+    "warnings": [
+      "lane 2: line R2 0.70 < 0.90 (4 rungs, 1.6 px of lean, angle +-3.47 deg)",
+      "lane 3: line R2 0.56 < 0.90 (5 rungs, 1.8 px of lean, angle +-3.95 deg)"
+    ],
+    "kept": 4,
+    "n_ladders": 4,
+    "n_bands": 61,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260514 PPA6-2_compare.png"
+  },
+  {
+    "input": "samples\\20260514PEPPER RNA.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 1.924,
+    "angle_reported": 1.924,
+    "se": 1.4737786627141412,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 1.47 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 1.47 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 8,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260514PEPPER RNA_compare.png"
+  },
+  {
+    "input": "samples\\20260515 121-35160-GFP PLAMID-CR PBT-990.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 1.522,
+    "angle_reported": 1.522,
+    "se": 0.9538967647732087,
+    "reason": "ok: 4 lane(s) pooled of 4, 19 rungs, se 0.95 deg",
+    "warnings": [
+      "lane 2: line R2 0.57 < 0.90 (5 rungs, 1.3 px of lean, angle +-3.22 deg)",
+      "lane 3: line R2 0.82 < 0.90 (4 rungs, 0.9 px of lean, angle +-2.51 deg)",
+      "longest lane spans only 66 px (< 70): short lever arm"
+    ],
+    "kept": 4,
+    "n_ladders": 4,
+    "n_bands": 89,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260515 121-35160-GFP PLAMID-CR PBT-990_compare.png"
+  },
+  {
+    "input": "samples\\20260515 121-AAP6-GFP.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 2.355,
+    "angle_reported": 2.355,
+    "se": 1.1315956454567713,
+    "reason": "no lane with >=4 rungs; used 2-rung column(s) (weak)",
+    "warnings": [
+      "2-rung fallback: no lane with >=4 rungs in this image; a 2-rung column is a short lever arm (angle se ~1.13 deg, 2 rungs, 53 px span)",
+      "longest lane spans only 53 px (< 70): short lever arm"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 21,
+    "fallback": true,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260515 121-AAP6-GFP_compare.png"
+  },
+  {
+    "input": "samples\\20260518 3820 14130 6770.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -4.354,
+    "angle_reported": -4.354,
+    "se": 0.8111190459116348,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.81 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.81 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 22,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260518 3820 14130 6770_compare.png"
+  },
+  {
+    "input": "samples\\20260518 GFP 15810 2300 990 3510-GFP 35160P+CDS.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.881,
+    "angle_reported": 0.881,
+    "se": 1.0089924702973783,
+    "reason": "ok: 1 lane(s) pooled of 1, 5 rungs, se 1.01 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 1.01 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 19,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260518 GFP 15810 2300 990 3510-GFP 35160P+CDS_compare.png"
+  },
+  {
+    "input": "samples\\20260519 14130 3820.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.906,
+    "angle_reported": 0.906,
+    "se": 1.715785820884009,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 1.72 deg",
+    "warnings": [
+      "lane 0: line R2 0.65 < 0.90 (7 rungs, 2.4 px of lean, angle +-1.72 deg)",
+      "single lane: no independent consensus, the answer is that lane alone (se 1.72 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 16,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260519 14130 3820_compare.png"
+  },
+  {
+    "input": "samples\\20260519 PBT-15810 121-GFP-HIS.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -1.69,
+    "angle_reported": -1.69,
+    "se": 1.0260429520161043,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 1.03 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 1.03 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 32,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260519 PBT-15810 121-GFP-HIS_compare.png"
+  },
+  {
+    "input": "samples\\20260520 2300-7670-GFP\u4e0b\u6392 pig -1 -2 slerf2 cds.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.044,
+    "angle_reported": 0.044,
+    "se": 1.5909377928158441,
+    "reason": "ok: 2 lane(s) pooled of 2, 10 rungs, se 1.59 deg",
+    "warnings": [
+      "lane 0: line R2 0.07 < 0.90 (5 rungs, 0.5 px of lean, angle +-1.89 deg)",
+      "lane 1: line R2 0.04 < 0.90 (5 rungs, 1.0 px of lean, angle +-2.96 deg)"
+    ],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 26,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260520 2300-7670-GFP\u4e0b\u6392 pig -1 -2 slerf2 cds_compare.png"
+  },
+  {
+    "input": "samples\\20260520 SLERF2GDNA.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 3.734,
+    "angle_reported": 3.734,
+    "se": 1.045007208597647,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 1.05 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 1.05 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 10,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260520 SLERF2GDNA_compare.png"
+  },
+  {
+    "input": "samples\\20260521 121-SLERF.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 2.409,
+    "angle_reported": 2.409,
+    "se": 1.0581021759408544,
+    "reason": "ok: 1 lane(s) pooled of 1, 6 rungs, se 1.06 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 1.06 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 25,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260521 121-SLERF_compare.png"
+  },
+  {
+    "input": "samples\\20260521 121-SLERF2 2300-14130.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 2.409,
+    "angle_reported": 2.409,
+    "se": 1.0581021759408544,
+    "reason": "ok: 1 lane(s) pooled of 1, 6 rungs, se 1.06 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 1.06 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 25,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260521 121-SLERF2 2300-14130_compare.png"
+  },
+  {
+    "input": "samples\\20260521 S001-F1 S001-F2 55130P 13772P 55130 CDS 13772 CDS.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -1.256,
+    "angle_reported": -1.256,
+    "se": 0.9890585842710924,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.99 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.99 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 22,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260521 S001-F1 S001-F2 55130P 13772P 55130 CDS 13772 CDS_compare.png"
+  },
+  {
+    "input": "samples\\20260522 3.1-NLUC NHX-CLUC 121-55130.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.776,
+    "angle_reported": 0.776,
+    "se": 0.757504435440399,
+    "reason": "ok: 2 lane(s) pooled of 2, 14 rungs, se 0.76 deg",
+    "warnings": [
+      "lane 1: line R2 0.44 < 0.90 (7 rungs, 1.0 px of lean, angle +-1.20 deg)"
+    ],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 59,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260522 3.1-NLUC NHX-CLUC 121-55130_compare.png"
+  },
+  {
+    "input": "samples\\20260522 PEAR DL DCL NING1 FLOWER BUD RNA.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 1.282,
+    "angle_reported": 1.282,
+    "se": 1.0685649820679104,
+    "reason": "ok: 2 lane(s) pooled of 2, 8 rungs, se 1.07 deg",
+    "warnings": [
+      "lane 0: line R2 0.82 < 0.90 (4 rungs, 0.5 px of lean, angle +-1.09 deg)",
+      "lane 1: line R2 0.65 < 0.90 (4 rungs, 2.9 px of lean, angle +-6.14 deg)"
+    ],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 12,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260522 PEAR DL DCL NING1 FLOWER BUD RNA_compare.png"
+  },
+  {
+    "input": "samples\\20260525 CLUC-3.1.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -2.758,
+    "angle_reported": -2.758,
+    "se": 1.9258061183986712,
+    "reason": "ok: 1 lane(s) pooled of 1, 4 rungs, se 1.93 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 1.93 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 34,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260525 CLUC-3.1_compare.png"
+  },
+  {
+    "input": "samples\\20260525 LB F2R2 S001 EGG R5 R6.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 1.96,
+    "angle_reported": 1.96,
+    "se": 0.5158217510914381,
+    "reason": "ok: 2 lane(s) pooled of 2, 14 rungs, se 0.52 deg",
+    "warnings": [],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 30,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260525 LB F2R2 S001 EGG R5 R6_compare.png"
+  },
+  {
+    "input": "samples\\20260526 NHX 3.1 G1FLAG ABC11 S2 G1-NLUC 990-CKUC 14130  \u4e0b\u6392nhx-cluc.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 1.312,
+    "angle_reported": 1.312,
+    "se": 1.3206750298608823,
+    "reason": "ok: 2 lane(s) pooled of 2, 8 rungs, se 1.32 deg",
+    "warnings": [
+      "lane 0: line R2 0.89 < 0.90 (4 rungs, 1.5 px of lean, angle +-2.29 deg)"
+    ],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 28,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260526 NHX 3.1 G1FLAG ABC11 S2 G1-NLUC 990-CKUC 14130  \u4e0b\u6392nhx-cluc_compare.png"
+  },
+  {
+    "input": "samples\\20260526 alsv-cp607.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -1.607,
+    "angle_reported": -1.607,
+    "se": 1.789033696630795,
+    "reason": "ok: 1 lane(s) pooled of 1, 5 rungs, se 1.79 deg",
+    "warnings": [
+      "lane 0: line R2 0.90 < 0.90 (5 rungs, 3.5 px of lean, angle +-1.79 deg)",
+      "single lane: no independent consensus, the answer is that lane alone (se 1.79 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 8,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260526 alsv-cp607_compare.png"
+  },
+  {
+    "input": "samples\\20260526 rna1 5trace r4 r5.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.298,
+    "angle_reported": -0.298,
+    "se": 0.7768692550086098,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.78 deg",
+    "warnings": [
+      "lane 0: line R2 0.56 < 0.90 (7 rungs, 0.9 px of lean, angle +-0.78 deg)",
+      "single lane: no independent consensus, the answer is that lane alone (se 0.78 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 13,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260526 rna1 5trace r4 r5_compare.png"
+  },
+  {
+    "input": "samples\\20260527 14130 131-NHX 3.1-MCHERRY ABC-NLUC 990-CLUC S2 G1-NLUC ALSV-607.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 3.75,
+    "angle_reported": 3.75,
+    "se": 0.48954119152917924,
+    "reason": "ok: 3 lane(s) pooled of 3, 21 rungs, se 0.49 deg",
+    "warnings": [],
+    "kept": 3,
+    "n_ladders": 3,
+    "n_bands": 84,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260527 14130 131-NHX 3.1-MCHERRY ABC-NLUC 990-CLUC S2 G1-NLUC ALSV-607_compare.png"
+  },
+  {
+    "input": "samples\\20260527 14130 131-NHX 3.1-MCHERRY ABC-NLUC 990-CLUC S2ALSV-607 G1-NLUC.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -0.734,
+    "angle_reported": -0.734,
+    "se": 0.5748105949980055,
+    "reason": "ok: 3 lane(s) pooled of 3, 21 rungs, se 0.57 deg",
+    "warnings": [
+      "lane 1: line R2 0.73 < 0.90 (7 rungs, 1.5 px of lean, angle +-1.31 deg)",
+      "lane 2: line R2 0.32 < 0.90 (7 rungs, 0.6 px of lean, angle +-0.83 deg)"
+    ],
+    "kept": 3,
+    "n_ladders": 3,
+    "n_bands": 83,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260527 14130 131-NHX 3.1-MCHERRY ABC-NLUC 990-CLUC S2ALSV-607 G1-NLUC_compare.png"
+  },
+  {
+    "input": "samples\\20260527 SIS8  7846 3.1FLAG FAD2PF2R2 7385.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 1.884,
+    "angle_reported": 1.884,
+    "se": 0.6392472549435075,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.64 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.64 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 21,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260527 SIS8  7846 3.1FLAG FAD2PF2R2 7385_compare.png"
+  },
+  {
+    "input": "samples\\20260528 \u4e0b\u6392 s2-ce  1300-sis8-ce.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 0.453,
+    "angle_reported": 0.453,
+    "se": 0.38690970222869253,
+    "reason": "ok: 4 lane(s) pooled of 4, 22 rungs, se 0.39 deg",
+    "warnings": [
+      "lane 0: line R2 0.90 < 0.90 (4 rungs, 0.5 px of lean, angle +-0.56 deg)",
+      "lane 2: line R2 0.53 < 0.90 (7 rungs, 1.7 px of lean, angle +-1.26 deg)",
+      "lane 3: line R2 0.51 < 0.90 (4 rungs, 0.7 px of lean, angle +-1.13 deg)"
+    ],
+    "kept": 4,
+    "n_ladders": 4,
+    "n_bands": 61,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260528 \u4e0b\u6392 s2-ce  1300-sis8-ce_compare.png"
+  },
+  {
+    "input": "samples\\20260529 121-3.1 ERF2-C 14130-2 14130-3 SIS8-NE 7385-CE 7386-NE.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 1.332,
+    "angle_reported": 1.332,
+    "se": 0.6363728708191709,
+    "reason": "ok: 2 lane(s) pooled of 2, 14 rungs, se 0.64 deg",
+    "warnings": [
+      "lane 1: line R2 0.79 < 0.90 (7 rungs, 2.6 px of lean, angle +-1.52 deg)"
+    ],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 58,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260529 121-3.1 ERF2-C 14130-2 14130-3 SIS8-NE 7385-CE 7386-NE_compare.png"
+  },
+  {
+    "input": "samples\\20260702 \u53f6 \u82b1\u82bd 01499.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 2.429,
+    "angle_reported": 2.429,
+    "se": 0.8133685744941973,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.81 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.81 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 21,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260702 \u53f6 \u82b1\u82bd 01499_compare.png"
+  },
+  {
+    "input": "samples\\20260811 62.Tif",
+    "engine": "ladders",
+    "ok": false,
+    "angle": 0.0,
+    "angle_reported": -8.114,
+    "se": 4.5038250489404925,
+    "reason": "implausible tilt -8.1 deg exceeds +-8.0 deg; grouping suspect (3-rung fallback)",
+    "warnings": [],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 7,
+    "fallback": true,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260811 62_compare.png"
+  },
+  {
+    "input": "samples\\20260909 15 16 17 18 19 DMP8-B DMP9-R DMP9-B.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -1.035,
+    "angle_reported": -1.035,
+    "se": 0.7883739603635447,
+    "reason": "ok: 2 lane(s) pooled of 3, 11 rungs, se 0.79 deg",
+    "warnings": [
+      "lane 1: line R2 0.86 < 0.90 (4 rungs, 0.7 px of lean, angle +-1.97 deg)"
+    ],
+    "kept": 2,
+    "n_ladders": 3,
+    "n_bands": 28,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260909 15 16 17 18 19 DMP8-B DMP9-R DMP9-B_compare.png"
+  },
+  {
+    "input": "samples\\20260916 131-DMP9-YFP  PSY06-UBQ64 MAS X2-MCHERRY.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 2.582,
+    "angle_reported": 2.582,
+    "se": 0.9185563577533166,
+    "reason": "ok: 2 lane(s) pooled of 2, 15 rungs, se 0.92 deg",
+    "warnings": [],
+    "kept": 2,
+    "n_ladders": 2,
+    "n_bands": 62,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260916 131-DMP9-YFP  PSY06-UBQ64 MAS X2-MCHERRY_compare.png"
+  },
+  {
+    "input": "samples\\20260917 DMP9-1 DMP9-2 X.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": -2.584,
+    "angle_reported": -2.584,
+    "se": 1.008678952472525,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 1.01 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 1.01 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 12,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260917 DMP9-1 DMP9-2 X_compare.png"
+  },
+  {
+    "input": "samples\\20260917 UBQ64 6300-1 6300-2.Tif",
+    "engine": "ladders",
+    "ok": true,
+    "angle": 2.946,
+    "angle_reported": 2.946,
+    "se": 0.4801177389456395,
+    "reason": "ok: 1 lane(s) pooled of 1, 7 rungs, se 0.48 deg",
+    "warnings": [
+      "single lane: no independent consensus, the answer is that lane alone (se 0.48 deg)"
+    ],
+    "kept": 1,
+    "n_ladders": 1,
+    "n_bands": 20,
+    "fallback": false,
+    "overdispersion": 1.0,
+    "compare": "rot_output\\20260917 UBQ64 6300-1 6300-2_compare.png"
+  }
+]

@@ -3,6 +3,8 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
+pytest.importorskip("scipy")  # retired engine; optional test dependency
+
 from geltilt.smears import (
     COARSE_STEP,
     STEP,

@@ -1,0 +1,25 @@
+01  20260428 15810 990 酵母膜蛋白质粒.Tif                   gt  +2.00  algo  +0.00  diff  -2.00  REFUSED
+02  20260811 62.Tif                                  gt  -6.80  algo  +0.00  diff  +6.80  REFUSED
+03  20260420 caAAP6 55130-2 55130-2 13772-1 13772-2. gt  +1.10  algo  +3.03  diff  +1.93  ok
+04  2026-519 胡椒rna2 f1r2 f2r1 rna1f2r2.Tif           gt  +1.40  algo  +3.16  diff  +1.76  ok
+05  20260526 alsv-cp607.Tif                          gt  +0.10  algo  -1.61  diff  -1.71  ok
+06  20260430 42-1 65-1 11-1 42-2.Tif                 gt  -1.50  algo  +0.18  diff  +1.68  ok
+07  20260427 65-1 65-2 11-1 11-2 测序.Tif              gt  +0.00  algo  -1.57  diff  -1.57  ok
+08  20260409 13772MU 35160-5941.Tif                  gt  +2.35  algo  +3.91  diff  +1.56  ok
+09  20260521 121-SLERF2 2300-14130.Tif               gt  +0.90  algo  +2.41  diff  +1.51  ok
+10  20260527 SIS8  7846 3.1FLAG FAD2PF2R2 7385.Tif   gt  +0.40  algo  +1.88  diff  +1.48  ok
+11  20260506 35160 AAP6 PPA6-1 990-BIFC 990-PBT.Tif  gt  -0.70  algo  -2.18  diff  -1.48  ok
+12  20260512 5941-ATPPA6-1 131-AAP6-YFP.Tif          gt  +0.00  algo  -1.45  diff  -1.45  ok
+13  20260420 55130-G 35160-121.Tif                   gt  +0.80  algo  -0.62  diff  -1.42  ok
+14  20260521 121-SLERF.Tif                           gt  +1.00  algo  +2.41  diff  +1.41  ok
+15  20260429 3.1 nhx.Tif                             gt  +3.00  algo  +4.40  diff  +1.40  ok
+16  20260409 PKSE-FAGAD.Tif                          gt  -0.90  algo  -2.25  diff  -1.35  ok
+17  20260522 PEAR DL DCL NING1 FLOWER BUD RNA.Tif    gt  +0.00  algo  +1.28  diff  +1.28  ok
+18  20260916 131-DMP9-YFP  PSY06-UBQ64 MAS X2-MCHERR gt  +1.30  algo  +2.58  diff  +1.28  ok
+19  20260407 13772-1 13772-2 MU13772  BGLII.Tif      gt  -1.85  algo  -3.10  diff  -1.25  ok
+20  20260526 NHX 3.1 G1FLAG ABC11 S2 G1-NLUC 990-CKU gt  +0.10  algo  +1.31  diff  +1.21  ok
+21  20260519 PBT-15810 121-GFP-HIS.Tif               gt  -0.50  algo  -1.69  diff  -1.19  ok
+22  20260509 13772P.Tif                              gt  -2.80  algo  -3.96  diff  -1.17  ok
+23  20260514 PPA6-2.Tif                              gt  +0.60  algo  +1.75  diff  +1.15  ok
+24  20260513 CR 990 35160 13772P.Tif                 gt  -1.00  algo  +0.14  diff  +1.14  ok
+25  20260515 121-AAP6-GFP.Tif                        gt  +1.30  algo  +2.35  diff  +1.05  ok

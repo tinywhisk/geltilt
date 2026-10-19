@@ -2,3 +2,4 @@ numpy>=1.23
 pillow>=9.0
 opencv-python-headless>=4.5
 pytest>=7.0
+scipy>=1.10            # only tests/test_smears.py (retired smears estimator)
