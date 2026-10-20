@@ -227,7 +227,7 @@ GelGenie 条带分割权重（Apache-2.0）由 University of Edinburgh 的研究
 - `python -m pytest -q`：301 passed（2026-10-19，仓库内实测）。
 - `python run_app.py --selftest`：`ok=true`、`image_surfaces=1`、写出 `app_selftest.json`。
 - 命令行单样本 `--dry-run --report` 可正常输出 JSON。
-- Release 附件 `geltilt-app.exe`：自包含单文件构建，内置 54.6 MB 模型与许可证（仓库内不提交该 130 MB 二进制）。
+- Release 附件 `geltilt-app.exe`：自包含单文件构建（2026-10-19，130,783,989 字节，SHA-256 `9632811db623011b3fc14aa4f3af125444e307c9115403d0de4b465105bf1a0c`），内置 54.6 MB 模型与许可证；仓库内不提交该二进制。
 
 ## 联系
 
