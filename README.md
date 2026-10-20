@@ -1,20 +1,24 @@
 # GelTilt — 凝胶电泳图像自动纠偏与泳道拼接工具
 
-2026 华为开发者大赛 · 上海理工大学站 · 学生赛道（初赛）参赛作品，队伍 **B.W.T**。
+2026 华为开发者大赛 · 上海理工大学站 · 学生赛道（初赛）参赛作品，队伍 **B.W.T**。提交仓库：<https://github.com/tinywhisk/geltilt>。
 
 GelTilt 读取凝胶成像仪拍摄的原始灰度图，用 GelGenie 分割条带、按泳道模型估计整幅图的倾斜角，
 再对图像做刚性旋转使泳道恢复竖直；同时支持按条带区域自动裁切、按指定泳道顺序拼接，
 以及一条命令行的批量处理与 JSON 报告。
 
-## 仓库说明
+## 提交方式
 
-本仓库为 GelTilt 的公开源码（与比赛提交包中的 `源码/` 目录一致，但去除了 `dist/` 预编译程序）。以下内容未纳入本仓库：
+本项目以 **GitHub 仓库链接** 作为项目文件的唯一提交方式。源码、文档、基准统计摘要、样本与第三方许可证均在本仓库中；
+约 130 MB 的自包含 Windows 程序（`geltilt-app.exe`，内置 GelGenie 模型与第三方许可证）受 GitHub 单文件 100 MB 限制，
+不作为 git 对象提交，而是发布在本仓库的 [Releases · v1.2.0](https://github.com/tinywhisk/geltilt/releases/tag/v1.2.0) 中。
+
+本仓库即 GelTilt 的提交版本（GitHub 链接为项目文件的唯一提交方式）。以下内容未纳入 git 版本控制：
 
 - 开发过程目录 `.codeartsdoer/` 与 `build/` 构建缓存；
-- 比赛提交包内含**自包含单文件程序** `dist/geltilt-app.exe`（内置 GelGenie 模型与第三方许可证，约 130 MB）；本仓库不包含该二进制文件，可用 `python build_app_exe.py` 重新打包；
+- 约 130 MB 的**自包含单文件程序** `geltilt-app.exe`（内置 GelGenie 模型与第三方许可证）作为 Release 附件发布（[v1.2.0](https://github.com/tinywhisk/geltilt/releases/tag/v1.2.0)），不纳入 git 仓库；也可用 `python build_app_exe.py` 从源码重新打包；
 - 94 个基准样本的全部逐图对照图（`rot_output/*.png`、`discrepencies/*.png`），仅保留统计摘要
   `rot_output/summary.json`、`rot_output/discrepancies.json` 与 `discrepencies/index.txt`；
-- GelGenie ONNX 模型权重默认不单独提供：比赛提交包内的 `dist/geltilt-app.exe` 已内置权重；源码运行首次使用时可自动下载，
+- GelGenie ONNX 模型权重默认不单独提供：Release 附件 `geltilt-app.exe` 已内置权重；源码运行首次使用时可自动下载，
   也可用环境变量 `GELTILT_GELGENIE_ONNX` 指定本地权重路径（见下文“模型准备”）。
 
 `samples/` 收录 **10 张代表性真实凝胶样本**（全部基准为 94 个文件，其中一对文件字节相同，
@@ -220,10 +224,10 @@ GelGenie 条带分割权重（Apache-2.0）由 University of Edinburgh 的研究
 
 - Python 3.14.7；NumPy 2.5.3；Pillow 12.3.0；opencv-python-headless 5.0.0.93；
   PyInstaller 6.22.3；Tk 9.0。
-- `python -m pytest -q`：301 passed（2026-10-19，源码包内实测）。
+- `python -m pytest -q`：301 passed（2026-10-19，仓库内实测）。
 - `python run_app.py --selftest`：`ok=true`、`image_surfaces=1`、写出 `app_selftest.json`。
 - 命令行单样本 `--dry-run --report` 可正常输出 JSON。
-- `dist/geltilt-app.exe`（比赛提交包内）：自包含单文件构建，内置 54.6 MB 模型与许可证。
+- Release 附件 `geltilt-app.exe`：自包含单文件构建，内置 54.6 MB 模型与许可证（仓库内不提交该 130 MB 二进制）。
 
 ## 联系
 
